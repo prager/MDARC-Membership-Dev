@@ -257,9 +257,66 @@ class Staff_model extends Model {
     $retarr['silent_keys'] = $silent_keys;
     $retarr['cnt_silents'] = count($silent_keys);
     $retarr['mem_types'] = $mem_types;
+    $retarr['all_mems'] = $this->get_mem_list();
 
     return $retarr;
 
+  }
+
+  private function get_mem_list() {
+    $db = \Config\Database::connect();
+    $builder = $db->table('tMembers');
+    $builder->where('cur_year >', 99);
+    $builder->where('silent_year', 0);
+    $res = $builder->get()->getResult();
+    $mem_types = $this->get_mem_types();
+    $retarr = array();
+    foreach ($res as $key => $member) {
+      $elem = array();
+      $elem['id'] = $member->id_members;
+
+//get family members from member model
+      $fam_mems = $this->get_fam_mems($elem['id']);
+      $elem['fam_mems'] = $fam_mems['fam_mems'];
+      $elem['fam_flag'] = $fam_mems['fam_flag'];
+
+//set the true or false values for boolean db entries
+      $elem['carrier'] = trim(strtoupper($member->hard_news));
+      $elem['dir'] = trim(strtoupper($member->hard_dir));
+      $elem['arrl'] = trim(strtoupper($member->arrl_mem));
+      $elem['mem_card'] = trim(strtoupper($member->mem_card));
+      $member->h_phone == NULL ? $elem['h_phone'] = '000-000-0000' : $elem['h_phone'] = $member->h_phone;
+      $member->w_phone == NULL ? $elem['w_phone'] = '000-000-0000' : $elem['w_phone'] = $member->w_phone;
+      $member->comment == NULL ? $elem['comment'] = '' : $elem['comment'] = $member->comment;
+      $elem['phone_unlisted'] = $member->h_phone_unlisted;
+      $elem['cell_unlisted'] = $member->w_phone_unlisted;
+      $elem['email_unlisted'] = $member->email_unlisted;
+      $elem['fname'] = $member->fname;
+      $elem['lname'] = $member->lname;
+      $elem['mem_types'] = $mem_types;
+      $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
+      $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
+      $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
+      $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
+      $elem['active'] = $member->active;
+      $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
+      $elem['mem_type'] = $mem_types[$member->id_mem_types];
+      $elem['id_mem_types'] = $member->id_mem_types;
+      $elem['callsign'] = $member->callsign;
+      $elem['license'] = $member->license;
+      $elem['hard_news'] = strtoupper($member->hard_news);
+      $elem['spouse_name'] = $member->spouse_name;
+      $elem['spouse_call'] = $member->spouse_call;
+      $elem['pay_date'] = date('Y-m-d', $member->paym_date);
+      $elem['pay_date_file'] = date('Y/m/d', $member->paym_date);
+      $elem['silent_date'] = date('Y-m-d', $member->silent_date);
+      $member->mem_since == NULL ? $elem['mem_since'] = 'N/A' : $elem['mem_since'] = $member->mem_since;
+      $member->email == NULL ? $elem['email'] = 'N/A' : $elem['email'] = $member->email;
+      $elem['ok_mem_dir'] = $member->ok_mem_dir;
+      if($member->id_mem_types == 1 || $member->id_mem_types == 2) { array_push($retarr, $elem);}
+    }
+    array_multisort(array_column($retarr, 'lname'), SORT_ASC, $retarr);
+    return $retarr;
   }
 
   public function update_cur_yr() {

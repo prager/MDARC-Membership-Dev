@@ -70,6 +70,25 @@ class Member_model extends Model {
     return $retarr;
   }
 
+  public function search($search) {
+    $db      = \Config\Database::connect();
+    $builder = $db->table('tMembers');
+    $fields = $db->getFieldNames('tMembers');
+    $ret_mems = array();
+    foreach ($fields as $key => $field) {
+      $builder->where($field, $search);
+      $cnt = $builder->countAllResults();
+      if($cnt > 0) {
+        $builder->resetQuery();
+        $res = $builder->get()->getResult();
+        foreach ($res as $key => $mem) {
+          array_push($ret_mems, $this->get_mem($mem->id_members));
+        }
+      }
+    }
+    return $ret_mems;
+  }
+
   public function get_member_by_email($email) {
     $db      = \Config\Database::connect();
     $builder = $db->table('tMembers');
