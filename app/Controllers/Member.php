@@ -28,7 +28,8 @@ class Member extends BaseController {
 	public function search() {
 		if($this->check_mem()) {
 	  	echo view('template/header_member.php');
-			$data = $this->mem_mod->search();
+			$search_str = $this->request->getPost('search');
+			$data = $this->mem_mod->search($search_str);
 			$data['msg'] = '';
 			echo view('members/search_res_view.php', $data);
 	   }
