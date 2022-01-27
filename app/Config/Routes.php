@@ -26,7 +26,7 @@ $routes->setAutoRoute(true);
 $routes->add('home', 'Home::index');
 $routes->add('Home', 'Home::index');
 $routes->add('contact', 'Home::contact');
-$routes->add('search', 'Member::search');
+$routes->add('search', 'Master::search');
 $routes->add('send-contact', 'Home::send_contact');
 $routes->add('staff', 'Staff::index');
 $routes->add('member', 'Member::index');

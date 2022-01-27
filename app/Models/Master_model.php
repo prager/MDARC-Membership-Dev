@@ -90,7 +90,7 @@ public function put_user_types() {
     $retarr['users'] = $users;
     return $retarr;
   }
-
+  
   private function get_user_types() {
     $db      = \Config\Database::connect();
     $builder = $db->table('admin_types');

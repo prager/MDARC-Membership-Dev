@@ -25,24 +25,6 @@ class Member extends BaseController {
 		echo view('template/footer.php');
 	}
 
-	public function search() {
-		if($this->check_mem()) {
-	  	echo view('template/header_member.php');
-			$search_str = $this->request->getPost('search');
-			$data = $this->mem_mod->search($search_str);
-			$data['msg'] = '';
-			echo view('members/search_res_view.php', $data);
-	   }
-    else {
-	  	echo view('template/header');
-			$this->login_mod->logout();
-      $data['title'] = 'Login Error';
-      $data['msg'] = 'There was an error while checking your credentials.<br><br>';
-      echo view('status/status_view.php', $data);
-    }
-		echo view('template/footer.php');
-	}
-
 	private function get_mem_data() {
 		$data['user'] = $this->login_mod->get_cur_user();
 		$mem_arr = $this->mem_mod->get_mem($data['user']['id_user']);
