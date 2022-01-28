@@ -29,7 +29,7 @@ class Master extends BaseController {
 			$data = $this->mem_mod->search($search_str);
 			$data['states'] = $this->data_mod->get_states_array();
 			$data['lic'] = $this->data_mod->get_lic();
-			$data['mem_types'] = $this->master_mod->get_member_types();
+			$data['mem_types'] = $this->staff_mod->get_mem_types();
 			echo view('master/search_res_view.php', $data);
 	   }
     else {

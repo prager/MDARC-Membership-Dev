@@ -43,7 +43,7 @@
             <select class="form-select" name="mem_types">
               <?php
                 foreach($mem_types as $key => $type) {
-                  if($mem['mem_type'] == $type) {?>
+                  if($mem['id_mem_types'] == $key) {?>
                     <option value="<?php echo $key; ?>" selected><?php echo $type; ?></option>
                   <?php }
                   else { ?>

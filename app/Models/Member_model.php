@@ -130,23 +130,18 @@ class Member_model extends Model {
   public function search($search) {
     $retarr['mems'] = array();
     $retarr['msg'] = NULL;
+    $staff_mod = new \App\Models\Staff_model();
     if(strlen($search) > 2) {
       $db      = \Config\Database::connect();
       $builder = $db->table('tMembers');
       $builder->like('lname', $search);
       $cnt = $builder->countAllResults();
-      $builder->orLike('lname', $search);
-      $builder->orLike('callsign', $search);
-      $retarr['mems'] = array();
       if($cnt > 0) {
         $builder->resetQuery();
         $builder->like('lname', $search);
         $res = $builder->get()->getResult();
         foreach ($res as $key => $mem) {
-          if($mem->id_mem_types == 1 || $mem->id_mem_types == 2) {
-            $mem_arr = $this->get_mem_id($mem->id_members)['primary'];
-            $mem_arr['id'] = $mem->id_members;
-          }
+          $mem_arr = $staff_mod->get_mem($mem->id_members);
           array_push($retarr['mems'], $mem_arr);
         }
       }

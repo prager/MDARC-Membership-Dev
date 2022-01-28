@@ -12,6 +12,7 @@
           <div class="col p-3">
             <div class="accordion" id="accFamMems">
               <?php
+              if(count($mem['fam_mems']) != 0) {
                 foreach($mem['fam_mems'] as $fam_mem) { ?>
                   <form action="<?php echo base_url() . '/index.php/edit-fam/'. $fam_mem['id_members']; ?>" method="post">
                   <div class="accordion-item">
@@ -115,7 +116,8 @@
                     </div>
                   </form>
                   </div>
-              <?php } ?>
+              <?php }
+                }?>
               <div class="accordion-item">
                 <form action="<?php echo base_url() . '/index.php/add-fam/'. $mem['id']; ?>" method="post">
                 <h2 class="accordion-header" id="headingThree">
