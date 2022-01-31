@@ -82,8 +82,8 @@ class Staff_model extends Model {
       $elem['mem_types'] = $mem_types;
       $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
       $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
-      $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
-      $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
+      $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
+      $member->zip == NULL ? $elem['zip'] = '00000' : $elem['zip'] = $member->zip;
       $elem['active'] = $member->active;
       $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
       $elem['mem_type'] = $mem_types[$member->id_mem_types];
@@ -257,7 +257,7 @@ class Staff_model extends Model {
     $retarr['silent_keys'] = $silent_keys;
     $retarr['cnt_silents'] = count($silent_keys);
     $retarr['mem_types'] = $mem_types;
-    $retarr['all_mems'] = $this->get_mem_list();
+    //$retarr['all_mems'] = $this->get_mem_list();
 
     return $retarr;
 
@@ -297,8 +297,8 @@ class Staff_model extends Model {
       $elem['mem_types'] = $mem_types;
       $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
       $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
-      $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
-      $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
+      $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
+      $member->zip == NULL ? $elem['zip'] = '00000' : $elem['zip'] = $member->zip;
       $elem['active'] = $member->active;
       $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
       $elem['mem_type'] = $mem_types[$member->id_mem_types];
@@ -354,8 +354,8 @@ class Staff_model extends Model {
       $elem['mem_types'] = $mem_types;
       $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
       $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
-      $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
-      $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
+      $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
+      $member->zip == NULL ? $elem['zip'] = '00000' : $elem['zip'] = $member->zip;
       $elem['active'] = $member->active;
       $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
       $elem['mem_type'] = $mem_types[$member->id_mem_types];
@@ -411,6 +411,9 @@ class Staff_model extends Model {
     if($id != NULL) {
       $builder->resetQuery();
       $builder->update($param, ['id_members' => $id]);
+
+  //must figure if primary member and update the family members as well
+  
     }
     elseif(($builder->countAllResults() == 0) && $this->check_dups($param)) {
           $param['update_type'] = 'Initial insert';
@@ -452,6 +455,9 @@ class Staff_model extends Model {
   public function delete_mem($id) {
     $db      = \Config\Database::connect();
     $builder = $db->table('tMembers');
+
+//must also inactivate the family members for primaries
+
     $builder->resetQuery();
     $builder->update(array('cur_year' => 99), ['id_members' => $id]);
     $builder->resetQuery();
@@ -703,6 +709,10 @@ class Staff_model extends Model {
   public function purge_mem($id) {
     $db      = \Config\Database::connect();
     $builder = $db->table('tMembers');
+    $builder->where('parent_primary', $id);
+
+// we must also purge the family members for the primary member
+
     $builder->resetQuery();
     $builder->delete(['id_members' => $id]);
   }
@@ -927,8 +937,8 @@ class Staff_model extends Model {
         $elem['lname'] = $member->lname;
         $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
         $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
-        $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
-        $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
+        $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
+        $member->zip == NULL ? $elem['zip'] = '00000' : $elem['zip'] = $member->zip;
         $elem['active'] = $member->active;
         $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
         $elem['mem_type'] = $member->mem_type;

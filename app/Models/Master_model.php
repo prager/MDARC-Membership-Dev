@@ -75,7 +75,6 @@ public function put_user_types() {
       );
       $user->username != NULL ? $usr_arr['username'] = $user->username : $usr_arr['username'] = 'Not Set!';
       $user->id_user_type != 0 ? $usr_arr['type_desc'] = $usr_types[$user->id_user_type] : $usr_arr['type_desc'] = $usr_types[$user->id_user_type];
-      //$user->id_user_type == 0 ? $usr_arr['type_code'] = 4 : $usr_arr['type_code'] = $user->id_user_type;
       $user->comment == NULL ? $usr_arr['comment'] = '' : $usr_arr['comment'] = $user->comment;
       $user->facebook == NULL ? $usr_arr['facebook'] = '' : $usr_arr['facebook'] = $user->facebook;
       $user->twitter == NULL ? $usr_arr['twitter'] = '' : $usr_arr['twitter'] = $user->twitter;
@@ -90,7 +89,7 @@ public function put_user_types() {
     $retarr['users'] = $users;
     return $retarr;
   }
-  
+
   private function get_user_types() {
     $db      = \Config\Database::connect();
     $builder = $db->table('admin_types');

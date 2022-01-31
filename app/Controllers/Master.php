@@ -428,7 +428,7 @@ class Master extends BaseController {
 					if($flags['usr_dup']) $data['errmsg'] .= '<p style="color:red;">Duplicate username</p>';
 					if(!($flags['pass_match'])) $data['errmsg'] .= '<p style="color:red;">Passwords do not match</p>';
 					if(!($flags['pass_comp'])) $data['errmsg'] .= '<p style="color:red;">Password complexity requirement not met</p>';
-					echo view('master/set_pass_view', $data);
+					echo view('master/edit_users_view', $data);
 				}
 		}
 		else {

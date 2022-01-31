@@ -10,7 +10,7 @@
   <!-- Option 1: Include in HTML -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="shortcut icon" href="/img/mdarc-icon.ico" type="image/x-icon">
-  <title>MDARC Membership</title>
+  <title>MDARC Membership - Dev</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 fixed-top">
@@ -33,7 +33,7 @@
               <li class="nav-item">
                   <a href="<?php echo base_url() . '/index.php/logout/'; ?>" class="nav-link"><i class="bi bi-person"></i> Logout </a>
               </li>
-              <form action="<?php echo base_url() . '/index.php/search'; ?>" method="post" class="d-flex px-3">
+              <form action="<?php echo base_url() . '/index.php/master-search'; ?>" method="post" class="d-flex px-3">
                 <input class="form-control me-4" type="search" name="search" placeholder="Search Members Database" aria-label="Search">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
               </form>

@@ -25,6 +25,17 @@ class Home extends BaseController {
     echo view('template/footer');
   }
 
+  public function faqs() {
+    if(!($this->login_mod->is_logged())) {
+      echo view('template/header');
+    }
+    else {
+      echo view('template/header_' . $this->login_mod->get_cur_user()['controller']);
+    }
+    echo view('public/faqs_view');
+    echo view('template/footer');
+  }
+
   public function send_contact() {
     echo view('template/header');
     $param['fname'] = $this->request->getPost('fname');
@@ -258,13 +269,14 @@ class Home extends BaseController {
     			$data['id_user'] = $flags_arr['id_user'];
     			if($data['id_user'] > 0) {
     				if(!($flags_arr['pass_match'])) $data['msg'] .= '<p style="color:red;">Passwords do not match</p>';
+      			if(!($flags_arr['usr_chk'])) $data['msg'] .= '<p style="color:red;">You entered a wrong username. Please, enter your correct username.</p>';
     				if(!($flags_arr['pass_comp'])) $data['msg'] .= '<p style="color:red;">Password complexity requirement not met. Password needs to contain at least one uppercase letter, one lowercase letter, one number and one special character in addition to be between 8 and 20 characters long.</p>';
     				$data['email_key'] = $flags_arr['email_key'];
     				echo view('public/set_pass_view', $data);
     			}
     			else {
     				$data['title'] = 'Error!';
-    				$data['msg'] = 'There was an error processing your data. <br><br>You can try again or contact the administrator. <br><br>';
+    				$data['msg'] = 'There was an error processing your data. <br><br>You can check your username and try again or contact the administrator. <br><br>';
             foreach($flags_arr as $key => $value) {
               //$value ? $data['msg'] .= $key . ' ' . 'OK<br>' : $data['msg'] .= $key . ' ' . 'Not OK<br>';
             }
@@ -304,7 +316,7 @@ class Home extends BaseController {
       }
     	echo view('template/footer');
     }
-    
+
     /**
     * Self-explanatory: calls the logout function from Loging_model
     */

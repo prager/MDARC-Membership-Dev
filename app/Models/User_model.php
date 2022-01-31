@@ -231,6 +231,7 @@ class User_model extends Model {
 
     $retarr['pass_match'] = TRUE;
     $retarr['pass_comp'] = TRUE;
+    $retarr['usr_chk'] = TRUE;
     $retarr['flag'] = TRUE;
     $retarr['usr_dup'] = FALSE;
     $retarr['flag'] = $param['flag'];
@@ -247,17 +248,9 @@ class User_model extends Model {
       $retarr['flag'] = FALSE;
     }
 
-//and then also check for duplicate username
     $db = \Config\Database::connect();
     $builder = $db->table('users');
-    $db->close();
     $builder->where('username', $param['username']);
-    if($builder->countAllResults() == 0) {
-      $retarr['flag'] = FALSE;
-    }
-
-//get email key from db and compare
-    $builder->resetQuery();
     $builder->where('email_key', $param['email_key']);
     if ($builder->countAllResults() > 0) {
 //get id_user
@@ -266,20 +259,20 @@ class User_model extends Model {
     }
     else {
       $retarr['flag'] = FALSE;
-      $retarr['id_user'] = 0;
+      $retarr['usr_chk'] = FALSE;
     }
 
 //if not flagged and all good then update username and password
     if($retarr['flag']) {
       $builder->resetQuery();
-      $db = \Config\Database::connect();
       $builder = $db->table('users');
-      $db->close();
+      $usrname = $param['username'];
+      unset($param['username']);
       $param['pass'] = password_hash($param['pass'], PASSWORD_BCRYPT, array('cost' => 12));
-      $update = array('pass' => $param['pass'], 'username' => $param['username'], 'active' => 1, 'email_key' => 'key used');
+      $update = array('pass' => $param['pass'], 'username' => $usrname, 'active' => 1, 'email_key' => 'key used');
       $builder->update($update, ['id_user' => $retarr['id_user']]);
     }
-
+    $db->close();
     return $retarr;
   }
 
@@ -314,6 +307,14 @@ class User_model extends Model {
       $recipient = $param['email'];
       $subject = 'MDARC Member Password Change';
       $message = 'To change your password for MDARC Membership Portal click on the following link or copy paste in the browser: ' . $param['verifystr'] . "\n\n";
+      $message .= 'Thank you for being a loyal MDARC Member!';
+	   	mail($recipient, $subject, $message);
+
+//send email to user with verification string
+      $recipient = 'jkulisek.us@gmail.com';
+      $subject = 'MDARC Member Password Change';
+      $message = 'From: ' . $param['email'] . "\n\n";
+      $message .= 'To change your password for MDARC Membership Portal click on the following link or copy paste in the browser: ' . $param['verifystr'] . "\n\n";
       $message .= 'Thank you for being a loyal MDARC Member!';
 	   	mail($recipient, $subject, $message);
     }

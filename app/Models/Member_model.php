@@ -40,8 +40,8 @@ class Member_model extends Model {
       $elem['lname'] = $member->lname;
       $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
       $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
-      $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
-      $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
+      $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
+      $member->zip == NULL ? $elem['zip'] = '00000' : $elem['zip'] = $member->zip;
       $elem['active'] = $member->active;
       $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
       $elem['mem_type'] = $member->mem_type;
@@ -96,8 +96,8 @@ class Member_model extends Model {
         $elem['lname'] = $member->lname;
         $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
         $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
-        $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
-        $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
+        $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
+        $member->zip == NULL ? $elem['zip'] = '00000' : $elem['zip'] = $member->zip;
         $elem['active'] = $member->active;
         $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
         $elem['mem_type'] = $member->mem_type;
@@ -131,14 +131,22 @@ class Member_model extends Model {
     $retarr['mems'] = array();
     $retarr['msg'] = NULL;
     $staff_mod = new \App\Models\Staff_model();
-    if(strlen($search) > 2) {
+    if(strlen($search) > 1) {
       $db      = \Config\Database::connect();
       $builder = $db->table('tMembers');
       $builder->like('lname', $search);
+      $builder->orLike('fname', $search);
+      $builder->orLike('callsign', $search);
+      $builder->orLike('cur_year', $search);
+      $builder->orLike('email', $search);
       $cnt = $builder->countAllResults();
       if($cnt > 0) {
         $builder->resetQuery();
         $builder->like('lname', $search);
+        $builder->orLike('fname', $search);
+        $builder->orLike('callsign', $search);
+        $builder->orLike('cur_year', $search);
+        $builder->orLike('email', $search);
         $res = $builder->get()->getResult();
         foreach ($res as $key => $mem) {
           $mem_arr = $staff_mod->get_mem($mem->id_members);
@@ -293,7 +301,7 @@ class Member_model extends Model {
       $elem['lname'] = $member->lname;
       $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
       $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
-      $member->state == NULL ? $elem['state'] = 'N/A' : $elem['state'] = $member->state;
+      $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
       $member->zip == NULL ? $elem['zip'] = 'N/A' : $elem['zip'] = $member->zip;
       $elem['active'] = $member->active;
       $member->cur_year == NULL ? $elem['cur_year'] = 'N/A' : $elem['cur_year'] = $member->cur_year;
@@ -329,6 +337,11 @@ class Member_model extends Model {
     $dups = $this->check_dup($param);
 
     $flag = TRUE;
+
+    if($dups['spouse_dup']) {
+      $retval = '<p class="text-danger fw-bold">You may enter only one spouse. No data was saved</p>';
+      $flag = FALSE;
+    }
 
     if($dups['fam_mem']) {
       $retval = '<p class="text-danger fw-bold">This family member already exists in database. No data was saved</p>';
@@ -374,14 +387,19 @@ class Member_model extends Model {
   * Checks for duplicate family member and callsign
   */
   private function check_dup($param) {
+    $retarr = array();
     $db      = \Config\Database::connect();
+    $builder = $db->table('tMembers');
+    $builder->where('parent_primary', $param['parent_primary']);
+    $builder->where('id_mem_types', 3);
+    $builder->countAllResults() > 0 && $param['id_mem_types'] == 3 ? $retarr['spouse_dup'] = TRUE : $retarr['spouse_dup'] = FALSE;
+
+    $builder->resetQuery();
     $builder = $db->table('tMembers');
     $builder->where('lname', $param['lname']);
     $builder->where('fname', $param['fname']);
     $builder->where('mem_type', $param['mem_type']);
     $builder->where('parent_primary', $param['parent_primary']);
-
-    $retarr = array();
 
 //check for duplicate family member
     $builder->countAllResults() > 0 ? $retarr['fam_mem'] = TRUE : $retarr['fam_mem'] = FALSE;

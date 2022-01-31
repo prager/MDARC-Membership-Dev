@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editMemLabel"><?php echo $mem['fname'] . ' ' . $mem['lname'] . ' ' . $mem['callsign']; ?></h5>
+        <h5 class="modal-title" id="editMemLabel"><?php echo $mem['fname'] . ' ' . $mem['lname'] . ' ' . $mem['callsign'] . ' /ID: ' . $mem['id']; ?></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="<?php echo base_url() . '/index.php/edit-mem/'. $mem['id']; ?>" method="post">
@@ -144,6 +144,7 @@
             <select class="form-select" name="state" aria-label="Default select example">
               <?php
                 foreach($states as $state) {
+                if($mem['state'] != 'N/A') {
                   if($state == $states[$mem['state']]) {?>
                   <option selected value="<?php echo key($states); ?>"><?php echo $state; ?></option>
                 <?php }
@@ -152,7 +153,8 @@
                 <?php
                     }
                 next($states);
-                  }?>
+                  }
+                }?>
             </select>
           </div>
           <div class="col-lg py-2">

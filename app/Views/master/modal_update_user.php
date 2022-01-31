@@ -60,15 +60,19 @@
             <label for="callsign">State</label>
             <select class="form-select" name="state" aria-label="Select State">
               <?php
-                foreach($states as $state) {
-                  if($state == $states[$user['state']]) {?>
-                  <option selected value="<?php echo key($states); ?>"><?php echo $state; ?></option>
-                <?php }
-                  else { ?>
-                  <option value="<?php echo key($states); ?>"><?php echo $state; ?></option>
-                <?php
+                foreach ($states as $key => $state) {
+                  if($user['state'] != NULL) {
+                    if($state == $states[trim($user['state'])]) {?>
+                    <option selected value="<?php echo key($states); ?>"><?php echo $state; ?></option>
+                  <?php }
+                    else { ?>
+                    <option value="<?php echo key($states); ?>"><?php echo $state; ?></option>
+                  <?php
+                      }
                     }
-                next($states);
+                    else{ ?>
+                      <option value="<?php echo key($states); ?>"><?php echo $state; ?></option>
+                <?php    }
                   }?>
             </select>
           </div>
