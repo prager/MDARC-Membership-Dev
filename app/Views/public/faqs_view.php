@@ -17,8 +17,8 @@
     <div class="row pt-2">
       <div class="col-lg-9 offset-lg-1">
         <p class="lead fw-bold">How can I log in into the Portal?</p>
-        <p>At first you have to be registered user. To register you have to be an active MDARC member and provide your MDARC registred email in the "Sign up for portal testing" on the home page at <a href="https://mdarc.jlkconsulting.info/">https://mdarc.jlkconsulting.info/</a></p>
-        <p>Then you will receive a link in your email to setup your username and password. When this is done, you will get a notice when your account is approved and then  you can start using the Portal.</p>
+        <p>At first you have to be registered user. To register you have to be an active MDARC member and provide your MDARC registered email in the "Sign up for portal testing" text field on the home page at <a href="https://mdarc.jlkconsulting.info/">https://mdarc.jlkconsulting.info/</a></p>
+        <p>Then you will receive a link in your email to setup your username and password. When this is done, you will get a notice when your account is approved and then you can start using the Portal.</p>
       </div>
     </div>
 

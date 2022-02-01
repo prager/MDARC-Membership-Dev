@@ -29,7 +29,7 @@
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="helpMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Help
+                  About
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="helpMenu">
                   <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/faqs'; ?>" class="nav-link"> &nbsp; FAQs</a></li>
