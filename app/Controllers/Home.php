@@ -270,9 +270,9 @@ class Home extends BaseController {
     			if($data['id_user'] > 0) {
     				if(!($flags_arr['pass_match'])) $data['msg'] .= '<p style="color:red;">Passwords do not match</p>';
       			if(!($flags_arr['usr_chk'])) $data['msg'] .= '<p style="color:red;">You entered a wrong username. Please, enter your correct username.</p>';
-    				if(!($flags_arr['pass_comp'])) $data['msg'] .= '<p style="color:red;">Password complexity requirement not met. Password needs to contain at least one uppercase letter, one lowercase letter, one number and one special character in addition to be between 8 and 20 characters long.</p>';
+    				if(!($flags_arr['pass_comp'])) $data['msg'] .= '<p style="color:red;">Password complexity requirement not met. Password needs to contain at least two uppercase letters, two lowercase letters, two numbers and two special characters (!@#$%^&*()\-_+.]) in addition to be at least 8 characters long.</p>';
     				$data['email_key'] = $flags_arr['email_key'];
-    				echo view('public/set_pass_view', $data);
+    				echo view('public/change_pass_view', $data);
     			}
     			else {
     				$data['title'] = 'Error!';

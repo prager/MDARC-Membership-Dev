@@ -26,6 +26,7 @@ $routes->setAutoRoute(true);
 $routes->add('home', 'Home::index');
 $routes->add('Home', 'Home::index');
 $routes->add('faqs', 'Home::faqs');
+$routes->add('regex', 'Master::regex');
 $routes->add('contact', 'Home::contact');
 $routes->add('master-search', 'Master::search');
 $routes->add('staff-search', 'Staff::search');

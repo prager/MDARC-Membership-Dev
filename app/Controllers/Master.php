@@ -483,4 +483,12 @@ class Master extends BaseController {
 		}
 		echo view('template/footer');
 	}
+
+	public function regex() {
+		echo view('template/header_master');
+		$data['title'] = 'Regex';
+		$data['msg'] = $this->master_mod->regex('PPass##1234');
+		echo view('status/status_view', $data);
+		echo view('template/footer');
+	}
 }

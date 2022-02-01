@@ -16,8 +16,8 @@
     <!-- FAQs rows -->
     <div class="row pt-2">
       <div class="col-lg-9 offset-lg-1">
-        <p class="lead fw-bold">How can I log into the Portal?</p>
-        <p>At first you have to be registered user. To register you have to be an active MDARC member and provide your MDARC registred email in the "Sign up for portal testing" on the home page at <a href="https://mdarc-dev.jlkconsulting.info/">https://mdarc.jlkconsulting.info/</a></p>
+        <p class="lead fw-bold">How can I log in into the Portal?</p>
+        <p>At first you have to be registered user. To register you have to be an active MDARC member and provide your MDARC registred email in the "Sign up for portal testing" on the home page at <a href="https://mdarc.jlkconsulting.info/">https://mdarc.jlkconsulting.info/</a></p>
         <p>Then you will receive a link in your email to setup your username and password. When this is done, you will get a notice when your account is approved and then  you can start using the Portal.</p>
       </div>
     </div>
@@ -26,8 +26,12 @@
     <div class="row pt-2">
       <div class="col-lg-9 offset-lg-1">
         <p class="lead fw-bold">What the MDARC Membership Portal has to offer?</p>
-        <p>At this time it is still in early testing stage and it has not been released to the public yet. However, as of now, it is able to provide membership status for its members such as whether or not they are current with their dues.
-        <p>As the first thing after the Portal is released to the public, the members will be able to update their data such as callsigns, addresses, names and add or delete their family members, who are also members of the Club.
+        <p>At this time it is still in early testing stage and it has not been released to the public yet. However, the first version should have at least these options:</p>
+        <ol>
+          <li>The ability to modify members’ own data such as name, address and callsign</li>
+          <li>Add, edit and delete members’ family members who can also be Club members</li>
+          <li>Observe membership status including the membership fees</li>
+        </ol>
       </div>
     </div>
 
@@ -35,7 +39,7 @@
     <div class="row pt-2">
       <div class="col-lg-9 offset-lg-1">
         <p class="lead fw-bold">Can the membership dues be also paid via this Portal?</p>
-        <p>Not at this moment. This feature is planned, but at first has to be implemented and then properly tested. It is expected that this process will take at least three or four months.</p>
+        <p>Not at this moment. However, this feature is planned and hopefully will be implemented in three or four months.</p>
       </div>
     </div>
 
@@ -43,7 +47,7 @@
     <div class="row pt-2">
       <div class="col-lg-9 offset-lg-1">
         <p class="lead fw-bold">Can new members register using the Portal?</p>
-        <p>Not at this moment. This feature is in the same stage as the ability to pay membership dues as it is mentioned above.</p>
+        <p>Not at this moment. This feature is at the same stage as the ability to pay membership dues as it is mentioned above.</p>
       </div>
     </div>
   </div>

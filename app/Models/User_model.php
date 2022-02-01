@@ -179,7 +179,7 @@ class User_model extends Model {
     $retarr['flag'] = $param['flag'];
 
 //check password complexity
-    if($param['pass'] != $param['pass2'] && preg_match('/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,20}$/', $param['pass'])) {
+    if($param['pass'] != $param['pass2'] && preg_match('/^(?=(.*[a-z]){2,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/', $param['pass'])) {
       $retarr['pass_comp'] = FALSE;
       $retarr['flag'] = FALSE;
     }
@@ -235,9 +235,10 @@ class User_model extends Model {
     $retarr['flag'] = TRUE;
     $retarr['usr_dup'] = FALSE;
     $retarr['flag'] = $param['flag'];
+    $retarr['email_key'] = $param['email_key'];
 
 //check password complexity
-    if($param['pass'] != $param['pass2'] && preg_match('/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,20}$/', $param['pass'])) {
+    if(!preg_match('/^(?=(.*[a-z]){2,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-_+.]){2,}).{8,}$/', $param['pass'])) {
       $retarr['pass_comp'] = FALSE;
       $retarr['flag'] = FALSE;
     }
@@ -252,6 +253,7 @@ class User_model extends Model {
     $builder = $db->table('users');
     $builder->where('username', $param['username']);
     $builder->where('email_key', $param['email_key']);
+    $retarr['id_user'] = 99999;
     if ($builder->countAllResults() > 0) {
 //get id_user
       $retarr['id_user'] = $this->get_id_email_key($param['email_key']);
@@ -332,7 +334,7 @@ public function load_password2($param) {
   $retarr['flag'] = $param['flag'];
 
 //check password complexity
-  if($param['pass'] != $param['pass2'] && preg_match('/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,20}$/', $param['pass'])) {
+  if($param['pass'] != $param['pass2'] && preg_match('/^(?=(.*[a-z]){2,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/', $param['pass'])) {
     $retarr['pass_comp'] = FALSE;
     $retarr['flag'] = FALSE;
   }

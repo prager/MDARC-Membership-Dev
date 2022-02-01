@@ -201,7 +201,7 @@ public function put_user_types() {
     $retarr['usr_dup'] = FALSE;
 
 //check password complexity
-    if($param['pass'] != $param['pass2'] && preg_match('/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,12}$/', $param['pass'])) {
+    if($param['pass'] != $param['pass2'] && preg_match('/^(?=(.*[a-z]){2,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/', $param['pass'])) {
       $retarr['pass_comp'] = FALSE;
       $retarr['flag'] = FALSE;
     }
