@@ -11,6 +11,7 @@ class Admin_model extends Model {
   public function __construct()  {
         parent::__construct();
   }
+  
 /**
 * Gets user types and puts them into csv file
 */

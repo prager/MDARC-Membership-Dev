@@ -20,6 +20,11 @@
       </div>
     </div>
     <div class="row px-5 pt-3">
+      <div class="col-lg-6">
+        <p>Passwords must contain at least:</p><p>8 characters, 2 uppercase, 2 lowercase, 2 numbers<br>2 special characters such as ()!@#$%^&*()\-_+.</p>
+      </div>
+    </div>
+    <div class="row px-5 pt-3">
       <div class="col-lg-4">
         <label for="lname">Set Your Password</label>
         <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter Password">

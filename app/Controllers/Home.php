@@ -236,7 +236,7 @@ class Home extends BaseController {
     			if($data['id_user'] > 0) {
     				if($flags_arr['usr_dup']) $data['msg'] .= '<p style="color:red;">Duplicate username</p>';
     				if(!($flags_arr['pass_match'])) $data['msg'] .= '<p style="color:red;">Passwords do not match</p>';
-    				if(!($flags_arr['pass_comp'])) $data['msg'] .= '<p style="color:red;">Password complexity requirement not met</p>';
+    				if(!($flags_arr['pass_comp'])) $data['msg'] .= '<p style="color:red;">Password complexity requirement not met. Password needs to contain at least two uppercase letters, two lowercase letters, two numbers and two special characters (!@#$%^&*()\-_+.]) in addition to be at least 8 characters long.</p>';
     				$data['email_key'] = $flags_arr['email_key'];
     				echo view('public/set_pass_view', $data);
     			}
