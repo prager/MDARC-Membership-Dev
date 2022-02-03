@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="shortcut icon" href="/img/mdarc-icon.ico" type="image/x-icon">
   <title>MDARC Membership - Dev</title>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 fixed-top">

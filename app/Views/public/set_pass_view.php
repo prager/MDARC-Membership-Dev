@@ -16,24 +16,19 @@
     <div class="row px-5">
       <div class="col-lg-4">
         <label for="lname">Enter Username</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your Username">
-      </div>
-    </div>
-    <div class="row px-5 pt-3">
-      <div class="col-lg-6">
-        <p>Passwords must contain at least:</p><p>8 characters, 2 uppercase, 2 lowercase, 2 numbers<br>2 special characters such as ()!@#$%^&*()\-_+.</p>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your Username" title="Enter your username" required>
       </div>
     </div>
     <div class="row px-5 pt-3">
       <div class="col-lg-4">
         <label for="lname">Set Your Password</label>
-        <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter Password">
+        <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter Password" title="Passwords must contain at least: 8 characters, 2 uppercase, 2 lowercase, 2 numbers and 2 special characters such as ()!@#$%^&*()\-_+." required>
       </div>
     </div>
     <div class="row px-5 pt-3">
       <div class="col-lg-4">
         <label for="lname">Re-Enter Password</label>
-        <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Re-Enter Password">
+        <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Re-Enter Password" title="Passwords must contain at least: 8 characters, 2 uppercase, 2 lowercase, 2 numbers and 2 special characters such as ()!@#$%^&*()\-_+." required>
       </div>
     </div>
     <div class="row px-5">

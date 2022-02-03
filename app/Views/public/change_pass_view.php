@@ -13,29 +13,24 @@
       </div>
     <?php }?>
     <form action="<?php echo base_url() . '/index.php/change-user-pass/'. $email_key; ?>" method="post">
-    <div class="row px-5">
-      <div class="col-lg-4">
-        <label for="lname">Enter Username</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your Username">
+      <div class="row px-5">
+        <div class="col-lg-4">
+          <label for="lname">Enter Username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your Username" title="Enter your username" required>
+        </div>
       </div>
-    </div>
-    <div class="row px-5 pt-3">
-      <div class="col-lg-6">
-        <p>Passwords must contain at least:</p><p>8 characters, 2 uppercase, 2 lowercase, 2 numbers<br>2 special characters such as ()!@#$%^&*()\-_+.</p>
+      <div class="row px-5 pt-3">
+        <div class="col-lg-4">
+          <label for="lname">Set Your Password</label>
+          <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter Password" title="Passwords must contain at least: 8 characters, 2 uppercase, 2 lowercase, 2 numbers and 2 special characters such as ()!@#$%^&*()\-_+." required>
+        </div>
       </div>
-    </div>
-    <div class="row px-5 pt-1">
-      <div class="col-lg-4">
-        <label for="lname">Set Your Password</label>
-        <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter Password">
+      <div class="row px-5 pt-3">
+        <div class="col-lg-4">
+          <label for="lname">Re-Enter Password</label>
+          <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Re-Enter Password" title="Passwords must contain at least: 8 characters, 2 uppercase, 2 lowercase, 2 numbers and 2 special characters such as ()!@#$%^&*()\-_+." required>
+        </div>
       </div>
-    </div>
-    <div class="row px-5 pt-3">
-      <div class="col-lg-4">
-        <label for="lname">Re-Enter Password</label>
-        <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Re-Enter Password">
-      </div>
-    </div>
     <div class="row px-5">
       <div class='col-lg px-3 pt-4'>
         <input class="btn btn-primary" type="submit" value=" Set Your Password ">
