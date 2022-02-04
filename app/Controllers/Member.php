@@ -259,4 +259,45 @@ class Member extends BaseController {
 		echo view('template/footer');
 	}
 
+/**
+* Show form to update username and password
+*/
+	public function show_update() {
+		if($this->check_mem()) {
+			echo view('template/header_member.php');
+			$data = $this->get_mem_data();
+			//$this->user_mod->update_acc($param);
+			$data['msg'] = '';
+			echo view('members/change_login_view', $data);
+		}
+		else {
+			echo view('template/header');
+			$data['title'] = 'Authorization Error';
+			$data['msg'] = 'You may not be authorized to view this page.<br><br>';
+			echo view('status/status_view', $data);
+		}
+		echo view('template/footer');
+	}
+
+	/**
+	* Do the update of username and password
+	*/
+	public function do_update() {
+		if($this->check_mem()) {
+			$data_orig = $this->get_mem_data();
+			$param['id'] = $data_orig['user']['id_user'];
+			$param['pass'] = $this->request->getPost('pass');
+			$param['pass2'] = $this->request->getPost('pass2');
+			$param['username'] = strtolower($this->request->getPost('username'));
+			$flags = $this->user_mod->update_acc($param);
+		}
+		else {
+			echo view('template/header');
+			$data['title'] = 'Authorization Error';
+			$data['msg'] = 'You may not be authorized to view this page.<br><br>';
+			echo view('status/status_view', $data);
+		}
+		echo view('template/footer');
+	}
+
 }

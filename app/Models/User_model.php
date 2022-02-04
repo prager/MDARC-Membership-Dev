@@ -445,6 +445,15 @@ return $retarr;
       return $retval;
     }
 
+    public function check_username($param) {
+      $db = \Config\Database::connect();
+      $builder = $db->table('users');
+      $builder->where('id_user !=', $param['id']);
+      $builder->where('username', $param['username']);
+      $retarr = array();
+      $builder->countAllResults() > 0 ? $retarr['usr_flag'] = TRUE : $retarr['usr_flag'] = FALSE;
+    }
+
     public function load_username($param) {
       $retval = TRUE;
 

@@ -37,8 +37,14 @@
                   <li><a class="dropdown-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#tech"> &nbsp; About</a></li>
                 </ul>
               </li>
-              <li class="nav-item">
-                  <a href="<?php echo base_url() . '/index.php/logout'; ?>" class="nav-link"><i class="bi bi-person"></i> Logout </a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="accMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person"></i></a>
+                <ul class="dropdown-menu" aria-labelledby="accMenu">
+                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/logout'; ?>" class="nav-link"><i class="bi bi-person-check"></i> Logout</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/show-update'; ?>" class="nav-link disabled"> <i class="bi bi-gear"></i> Settings</a></li>
+                </ul>
               </li>
               <form action="<?php echo base_url() . '/index.php/staff-search'; ?>" method="post" class="d-flex px-3">
                 <input class="form-control me-4" type="search" name="search" placeholder="Search Members Database" aria-label="Search">

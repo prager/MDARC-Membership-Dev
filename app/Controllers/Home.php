@@ -260,7 +260,7 @@ class Home extends BaseController {
     		$param['username'] = strtolower($this->request->getPost('username'));
     		$flags_arr = $this->user_mod->change_user_pass($param);
     		if($flags_arr['flag']) {
-    			$data['title'] = 'Username and Password Set!';
+    			$data['title'] = 'Your Password Was Successfully Changed!';
     			$data['msg'] = 'Now you can go back to home page and login with your new password.';
     			echo view('status/status_view', $data);
     		}
