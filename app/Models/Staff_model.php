@@ -18,6 +18,67 @@ class Staff_model extends Model {
     $mem_types = $this->get_mem_types();
     $db      = \Config\Database::connect();
     $builder = $db->table('tMembers');
+    if($param['page'] == 0) {
+      $builder->like('lname', 'A', 'after');
+      $builder->orLike('lname', 'B', 'after');
+      $builder->orLike('lname', 'C', 'after');
+      $builder->orLike('lname', 'D', 'after');
+      $builder->orLike('lname', 'E', 'after');
+      $builder->orWhere('hard_news', 'True');
+      $builder->orWhere('hard_news', 'TRUE');
+      $builder->orWhere('hard_news', 'true');
+
+    }
+    elseif($param['page'] == 1) {
+      $builder->like('lname', 'F', 'after');
+      $builder->orLike('lname', 'G', 'after');
+      $builder->orLike('lname', 'H', 'after');
+      $builder->orLike('lname', 'I', 'after');
+      $builder->orLike('lname', 'J', 'after');
+      $builder->orWhere('hard_news', 'True');
+      $builder->orWhere('hard_news', 'TRUE');
+      $builder->orWhere('hard_news', 'true');
+    }
+    elseif($param['page'] == 2) {
+      $builder->like('lname', 'K', 'after');
+      $builder->orLike('lname', 'L', 'after');
+      $builder->orLike('lname', 'M', 'after');
+      $builder->orLike('lname', 'N', 'after');
+      $builder->orLike('lname', 'O', 'after');
+      $builder->orWhere('hard_news', 'True');
+      $builder->orWhere('hard_news', 'TRUE');
+      $builder->orWhere('hard_news', 'true');
+    }
+    elseif($param['page'] == 3) {
+      $builder->like('lname', 'P', 'after');
+      $builder->orLike('lname', 'R', 'after');
+      $builder->orLike('lname', 'S', 'after');
+      $builder->orWhere('hard_news', 'True');
+      $builder->orWhere('hard_news', 'TRUE');
+      $builder->orWhere('hard_news', 'true');
+    }
+    elseif($param['page'] == 4) {
+      $builder->like('lname', 'U', 'after');
+      $builder->orLike('lname', 'T', 'after');
+      $builder->orLike('lname', 'V', 'after');
+      $builder->orLike('lname', 'W', 'after');
+      $builder->orLike('lname', 'X', 'after');
+      $builder->orLike('lname', 'Y', 'after');
+      $builder->orLike('lname', 'Z', 'after');
+      $builder->orWhere('hard_news', 'True');
+      $builder->orWhere('hard_news', 'TRUE');
+      $builder->orWhere('hard_news', 'true');
+    }
+    else {
+      $builder->like('lname', 'A', 'after');
+      $builder->orLike('lname', 'B', 'after');
+      $builder->orLike('lname', 'C', 'after');
+      $builder->orLike('lname', 'D', 'after');
+      $builder->orLike('lname', 'E', 'after');
+      $builder->orWhere('hard_news', 'True');
+      $builder->orWhere('hard_news', 'TRUE');
+      $builder->orWhere('hard_news', 'true');
+    }
     $db->close();
     $res = $builder->get()->getResult();
 
@@ -257,6 +318,7 @@ class Staff_model extends Model {
     $retarr['silent_keys'] = $silent_keys;
     $retarr['cnt_silents'] = count($silent_keys);
     $retarr['mem_types'] = $mem_types;
+    $retarr['page'] = $param['page'];
     //$retarr['all_mems'] = $this->get_mem_list();
 
     return $retarr;
@@ -411,9 +473,12 @@ class Staff_model extends Model {
     if($id != NULL) {
       $builder->resetQuery();
       $builder->update($param, ['id_members' => $id]);
-
   //must figure if primary member and update the family members as well
-  
+      $builder->resetQuery();
+      $up_arr = array('paym_date' => $param['paym_date'],
+                      'cur_year' => $param['cur_year']);
+      $builder->update($up_arr, ['parent_primary' => $id]);
+
     }
     elseif(($builder->countAllResults() == 0) && $this->check_dups($param)) {
           $param['update_type'] = 'Initial insert';

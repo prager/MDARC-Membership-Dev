@@ -288,7 +288,7 @@ class User_model extends Model {
       $builder->resetQuery();
       $builder = $db->table('users');
       $builder->where('email', $param['email']);
-      $update_str = array('email_key' => $param['email_key']);
+      $update_str = array('email_key' => $param['email_key'], 'active' => 0);
       $builder->update($update_str, ['email' => $param['email']]);
       $this->db->transComplete();
 

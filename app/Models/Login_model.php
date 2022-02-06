@@ -70,7 +70,7 @@ public function check_credentials($data) {
   $builder->where('username', $data['user']);
   $user = $builder->get()->getRow();
   if(isset($data['user']) && isset($user->pass) && isset($user->username)) {
-    if((password_verify($data['pass'], $user->pass)) && ($data['user'] == $user->username)) {
+    if((password_verify($data['pass'], $user->pass)) && ($data['user'] == $user->username) && ($user->active == 1 && $user->authorized == 1)) {
       $usr_arr['user'] = $this->get_user_arr($user->id_user);
       $usr_arr['user']['session_id'] = session_id();
       $_SESSION['user'] = $usr_arr['user'];
@@ -89,6 +89,13 @@ public function check_credentials($data) {
   $db->close();
   return $retval;
   //return TRUE;
+}
+
+private function check_auth($username) {
+  $builder = $db->table('users');
+  $builder->where('username', $data['user']);
+
+  return TRUE;
 }
 
 /**

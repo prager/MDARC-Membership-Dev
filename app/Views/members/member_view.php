@@ -6,8 +6,8 @@
           <h3 class="fw-bold"><span class="text-warning">MDARC Member: </span><?php echo $primary['fname'] . ' ' . $primary['lname']; ?></h3>
         </div>
       </div>
-      <div class="row pt-2">
-        <div class="col-lg-3 offset-lg-1 bg-light pt-3">
+      <div class="row pt-2 pb-5 mb-5">
+        <div class="col-lg-3 offset-lg-1 bg-light pt-3 mb-3">
           <table class="table table-borderless table-hover border">
             <tr class="border-bottom">
               <td><a href="<?php echo base_url() . '/index.php/pers-data'; ?>" class="text-decoration-none text-body nav-link"> <i class="bi bi-person"></i> Edit Your Data </a></td>
@@ -36,7 +36,7 @@
               </tr>
             </table>
         </div>
-        <div class="col bg-light p-3">
+        <div class="col-lg-6 bg-light p-3 mb-3">
             <?php if($msg != NULL) {?>
             <?php echo $msg; ?>
           <?php }?>

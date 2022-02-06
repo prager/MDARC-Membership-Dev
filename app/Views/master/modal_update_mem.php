@@ -69,9 +69,9 @@
           </div>
         </div>
         <div class="row py-2">
-          <div class="col-lg p-3">
+          <div class="col-lg">
             <div class="form-check">
-              <label class="form-check-label" for="arrl"> ARRL Member </label>
+              <label class="form-check-label" for="arrl"> ARRL Mem </label>
               <?php if(strtoupper($mem['arrl']) == 'TRUE') {?>
                 <input class="form-check-input" type="checkbox" name="arrl" checked />
               <?php }
@@ -80,7 +80,7 @@
               <?php } ?>
             </div>
           </div>
-          <div class="col-lg p-3">
+          <div class="col-lg">
             <div class="form-check">
               <label class="form-check-label" for="carrier"> Carrier Copy </label>
               <?php if(strtoupper($mem['hard_news']) == 'TRUE') {?>
@@ -91,9 +91,9 @@
               <?php } ?>
             </div>
           </div>
-          <div class="col-lg p-3">
+          <div class="col-lg">
             <div class="form-check">
-              <label class="form-check-label" for="dir"> Directory Copy </label>
+              <label class="form-check-label" for="dir"> Dir Copy </label>
               <?php if(strtoupper($mem['mem_card']) == 'TRUE') {?>
                 <input class="form-check-input" type="checkbox" name="dir" checked />
               <?php }
@@ -102,14 +102,25 @@
               <?php } ?>
             </div>
           </div>
-          <div class="col-lg p-3">
+          <div class="col-lg">
             <div class="form-check">
-              <label class="form-check-label" for="mem_card"> Member Card </label>
+              <label class="form-check-label" for="mem_card"> Mem Card </label>
               <?php if(strtoupper($mem['mem_card']) == 'TRUE') {?>
                 <input class="form-check-input" type="checkbox" name="mem_card" checked />
               <?php }
                     else { ?>
                 <input class="form-check-input" type="checkbox" name="mem_card" />
+              <?php } ?>
+            </div>
+          </div>
+          <div class="col-lg">
+            <div class="form-check">
+              <label class="form-check-label" for="dir_ok"> List OK</label>
+              <?php if(strtoupper($mem['ok_mem_dir']) == 'TRUE') {?>
+                <input class="form-check-input" type="checkbox" name="dir_ok" checked>
+              <?php }
+                    else { ?>
+                <input class="form-check-input" type="checkbox" name="dir_ok">
               <?php } ?>
             </div>
           </div>

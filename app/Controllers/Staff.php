@@ -45,6 +45,8 @@ class Staff extends BaseController {
 	public function show_members() {
 		if($this->check_staff()) {
 			echo view('template/header_staff');
+			$this->uri->setSilent();
+			$param['page'] = $this->uri->getSegment(2);
 			$param['states'] = $this->data_mod->get_states_array();
 			$param['lic'] = $this->data_mod->get_lic();
 			echo view('staff/members_view', $this->staff_mod->get_mems($param));

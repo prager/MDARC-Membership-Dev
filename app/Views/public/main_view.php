@@ -55,9 +55,6 @@
                 <p>
                     In addition to its Membership portal, the development will include websites for all the MDARC activities including Pacificon, public events, license testing and monthly meetings with lectures on many ham radio topics. And that is not all by far. Learn more about technical details by clicking on the button below.
                 </p>
-                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tech"><i class="bi bi-chevron-right"></i> More Info </button>
-
-                </a>
             </div>
         </div>
     </div>

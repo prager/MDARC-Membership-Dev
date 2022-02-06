@@ -35,6 +35,17 @@
                   </ul>
                 <div class="tab-content m-1" id="pills-tabContent">
                   <div class="tab-pane fade show active" id="cur_mems" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <?php if($page == 0) { ?><span class="text-secondary">A - E &nbsp; </span><?php } else {?>
+                    <span><a href="<?php echo base_url() . '/index.php/members-list'; ?>" class="text-decoration-none">A - E</a> &nbsp; </span><?php } ?>
+                    <?php if($page == 1) { ?><span class="text-secondary">F - J &nbsp; </span><?php } else {?>
+                    <span><a href="<?php echo base_url() . '/index.php/members-list/1'; ?>" class="text-decoration-none">F - J</a> &nbsp; </span><?php } ?>
+                    <?php if($page == 2) { ?><span class="text-secondary">K - O &nbsp; </span><?php } else {?>
+                    <span><a href="<?php echo base_url() . '/index.php/members-list/2'; ?>" class="text-decoration-none">K - O</a> &nbsp; </span><?php } ?>
+                    <?php if($page == 3) { ?><span class="text-secondary">P - S &nbsp; </span><?php } else {?>
+                    <span><a href="<?php echo base_url() . '/index.php/members-list/3'; ?>" class="text-decoration-none">P - S</a> &nbsp; </span><?php } ?>
+                    <?php if($page == 4) { ?><span class="text-secondary">T - Z &nbsp; </span><?php } else {?>
+                    <span><a href="<?php echo base_url() . '/index.php/members-list/4'; ?>" class="text-decoration-none">T - Z</a> &nbsp; </span><?php } ?>
+                    <br>
                     <table class="table table-hover table-bordered">
                       <thead>
                         <tr>

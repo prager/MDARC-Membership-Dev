@@ -45,6 +45,8 @@ class Master extends BaseController {
 	public function show_members() {
 		if($this->check_master()) {
 			echo view('template/header_master');
+			$this->uri->setSilent();
+			$param['page'] = $this->uri->getSegment(2);
 			$param['states'] = $this->data_mod->get_states_array();
 			$param['lic'] = $this->data_mod->get_lic();
 			$param['mem_types'] = $this->master_mod->get_member_types();
@@ -150,7 +152,8 @@ class Master extends BaseController {
 					$this->request->getPost('arrl') == 'on' ? $param['arrl_mem'] = 'TRUE' : $param['arrl_mem'] = 'FALSE';
 					$this->request->getPost('hard_news') == 'on' ? $param['hard_news'] = 'TRUE' : $param['hard_news'] = 'FALSE';
 					$this->request->getPost('dir') == 'on' ? $param['hard_dir'] = 'TRUE' : $param['hard_dir'] = 'FALSE';
-					$this->request->getPost('mem_card') == 'on' ? $param['mem_card'] = 'TRUE' : $param['mem_card'] = 'FALSE';
+					$this->request->getPost('mem_card') == 'on' ? $param['mem_card'] = 'TRUE' : $param['mem_card'] = 'FALSE';					
+					$this->request->getPost('dir_ok') == 'on' ? $param['ok_mem_dir'] = 'TRUE' : $param['ok_mem_dir'] = 'FALSE';
 
 					$this->uri->setSilent();
 					$param['id'] = $this->uri->getSegment(2);
@@ -159,6 +162,7 @@ class Master extends BaseController {
 						$param['states'] = $this->data_mod->get_states_array();
 						$param['lic'] = $this->data_mod->get_lic();
 						$param['member_types'] = $this->master_mod->get_member_types();
+						$param['page'] = 0;
 						echo view('master/members_view', $this->staff_mod->get_mems($param));
 					}
 					else {
@@ -237,6 +241,7 @@ class Master extends BaseController {
 						$email = $this->request->getPost('email');
 						filter_var($email, FILTER_VALIDATE_EMAIL) ? $param['email'] = $email : $param['email'] = 'none';
 						$this->request->getPost('arrl') == 'on' ? $param['arrl_mem'] = 'TRUE' : $param['arrl_mem'] = 'FALSE';
+						$this->request->getPost('dir_ok') == 'on' ? $param['ok_mem_dir'] = 'TRUE' : $param['ok_mem_dir'] = 'FALSE';
 						$this->mem_mod->edit_fam_mem($param);
 						$this->show_members();
 					}

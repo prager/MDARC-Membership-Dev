@@ -521,7 +521,7 @@ class Member_model extends Model {
   }
 
   public function edit_fam_mem($param) {
-
+    if(strlen(trim($param['callsign'])) == 0) {$param['callsign'] = 'NONE';}
     $db      = \Config\Database::connect();
     $builder = $db->table('tMembers');
     $builder->where('id_members', $param['id']);
