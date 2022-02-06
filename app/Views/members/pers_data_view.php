@@ -302,7 +302,6 @@
                 </div>
               </div>
         <!-- End of delete Family Member modal -->
-
               </tr>
                 <?php  }?>
             </tbody>

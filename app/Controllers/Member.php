@@ -111,8 +111,7 @@ class Member extends BaseController {
 			}
 			else {
 				$data = $this->get_mem_data();
-				$data['msg'] = '<p class="text-success"><strong>Success!</strong> ';
-				$data['msg'] .= 'Your changes have been saved</p>';
+				$data['msg'] = '<div class="text-success"><strong>Success!</strong> Your changes have been saved</div><br>';
 				echo view('members/member_view.php', $data);
 			}
 		}
@@ -284,12 +283,30 @@ class Member extends BaseController {
 	*/
 	public function do_update() {
 		if($this->check_mem()) {
-			$data_orig = $this->get_mem_data();
-			$param['id'] = $data_orig['user']['id_user'];
+			echo view('template/header_member.php');
+			$data = $this->get_mem_data();
+			$param['id'] = $data['user']['id_user'];
 			$param['pass'] = $this->request->getPost('pass');
 			$param['pass2'] = $this->request->getPost('pass2');
 			$param['username'] = strtolower($this->request->getPost('username'));
-			$flags = $this->user_mod->update_acc($param);
+			$flags = $this->user_mod->do_update($param);
+			if($flags['flag']) {
+				$data['msg'] = '<p class="text-success"><strong>Success!</strong> ';
+				$data['msg'] .= 'Your changes were saved!</p>';
+				echo view('members/member_view', $data);
+			}
+			else {
+				$data['msg'] = '<p class="text-danger"><strong>Error(s)!</strong> ';
+				if(!$flags['pass_comp']) {
+					$data['msg'] .= '<br>The pasword requirements not met. It must be at least 8 characters long, 2 upper case, 2 lower case, 2 numbers and 2 special characters such as !@#$%^&*()\-_+.<br>'; }
+				if(!$flags['pass_match']) {
+					$data['msg'] .= 'The paswords did not match<br>';
+				}
+				if(!$flags['username']) {
+					$data['msg'] .= 'The username is already taken. Please, use different username<br>';
+				}
+				$data['msg'] .= '</p>';
+				echo view('members/change_login_view', $data);			}
 		}
 		else {
 			echo view('template/header');

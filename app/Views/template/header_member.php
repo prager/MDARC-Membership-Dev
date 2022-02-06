@@ -10,8 +10,7 @@
   <!-- Option 1: Include in HTML -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="shortcut icon" href="/img/mdarc-icon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/css/style.css">
-  <title>MDARC Membership</title>
+  <title>MDARC Membership - Dev</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 fixed-top">
@@ -29,21 +28,17 @@
                   <a href="<?php echo base_url() . '/index.php/contact'; ?>" class="nav-link">Contact</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="helpMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false"> About </a>
+                <a class="nav-link dropdown-toggle" href="#" id="helpMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  About
+                </a>
                 <ul class="dropdown-menu" aria-labelledby="helpMenu">
                   <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/faqs'; ?>" class="nav-link"> &nbsp; FAQs</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#tech"> &nbsp; About</a></li>
                 </ul>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="accMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-person"></i></a>
-                <ul class="dropdown-menu" aria-labelledby="accMenu">
-                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/logout'; ?>" class="nav-link"><i class="bi bi-person-check"></i> Logout</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/show-update'; ?>" class="nav-link disabled"> <i class="bi bi-gear"></i> Settings</a></li>
-                </ul>
+              <li class="nav-item">
+                  <a href="<?php echo base_url() . '/index.php/logout/'; ?>" class="nav-link"><i class="bi bi-box-arrow-up-right"></i> Logout </a>
               </li>
           </ul>
       </div>

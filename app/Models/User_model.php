@@ -229,30 +229,21 @@ class User_model extends Model {
 
   public function change_user_pass($param) {
 
-    $retarr['pass_match'] = TRUE;
-    $retarr['pass_comp'] = TRUE;
     $retarr['usr_chk'] = TRUE;
     $retarr['flag'] = TRUE;
     $retarr['usr_dup'] = FALSE;
     $retarr['flag'] = $param['flag'];
     $retarr['email_key'] = $param['email_key'];
 
-//check password complexity
-    if(!preg_match('/^(?=(.*[a-z]){2,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-_+.]){2,}).{8,}$/', $param['pass'])) {
-      $retarr['pass_comp'] = FALSE;
-      $retarr['flag'] = FALSE;
-    }
-
-//check if passwords match
-    if($param['pass'] != $param['pass2']) {
-      $retarr['pass_match'] = FALSE;
-      $retarr['flag'] = FALSE;
-    }
+    $pass_flags = $this->check_pass($param);
+    $retarr['pass_comp'] = $pass_flags['pass_comp'];
+    $retarr['pass_match'] = $pass_flags['pass_match'];
 
     $db = \Config\Database::connect();
     $builder = $db->table('users');
     $builder->where('username', $param['username']);
     $builder->where('email_key', $param['email_key']);
+
     $retarr['id_user'] = 99999;
     if ($builder->countAllResults() > 0) {
 //get id_user
@@ -451,13 +442,54 @@ return $retarr;
       $builder->where('id_user !=', $param['id']);
       $builder->where('username', $param['username']);
       $retarr = array();
-      $builder->countAllResults() > 0 ? $retarr['usr_flag'] = TRUE : $retarr['usr_flag'] = FALSE;
+      $retarr['usr_flag'] = TRUE;
+      $builder->countAllResults() > 0 ? $retarr['usr_flag'] = FALSE : $retarr['usr_flag'] = TRUE;
+      return $retarr;
     }
 
-    public function load_username($param) {
-      $retval = TRUE;
+    private function check_pass($param) {
+      $retarr = array();
+      $retarr['pass_comp'] = TRUE;
+      $retarr['flag'] = TRUE;
+      $retarr['pass_match'] = TRUE;
+      if(!preg_match('/^(?=(.*[a-z]){2,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-_+.]){2,}).{8,}$/', $param['pass'])) {
+        $retarr['pass_comp'] = FALSE;
+        $retarr['flag'] = FALSE;
+      }
+  //check if passwords match
+      if($param['pass'] != $param['pass2']) {
+        $retarr['pass_match'] = FALSE;
+        $retarr['flag'] = FALSE;
+      }
+      return $retarr;
+    }
 
-      return $retval;
+    public function do_update($param) {
+      $retarr = array();
+      $pass_flags = $this->check_pass($param);
+      $retarr['username'] = TRUE;
+      $retarr['pass_comp'] = TRUE;
+      $retarr['pass_match'] = TRUE;
+      $retarr['flag'] = TRUE;
+      if(!($this->check_username($param)['usr_flag'] && $pass_flags['flag'])) {
+      //if(!(TRUE && $pass_flags['flag'])) {
+        $retarr['username'] = FALSE;
+        $retarr['pass_comp'] = $pass_flags['pass_comp'];
+        $retarr['pass_match'] = $pass_flags['pass_match'];
+        $retarr['flag'] = FALSE;
+      }
+
+      if($retarr['flag']) {
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $builder->where('id_user', $param['id']);
+        $pass = password_hash($param['pass'], PASSWORD_BCRYPT, array('cost' => 12));
+        $update = array('pass' => $pass, 'username' => $param['username']);
+        $builder->update($update, ['id_user' => $param['id']]);
+        $db->close();
+      }
+
+      return $retarr;
     }
 
 }

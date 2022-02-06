@@ -29,7 +29,7 @@ $routes->add('faqs', 'Home::faqs');
 $routes->add('regex', 'Master::regex');
 $routes->add('contact', 'Home::contact');
 $routes->add('show-update', 'Member::show_update');
-$routes->add('do-update/(:num)', 'Member::do_update');
+$routes->add('do-update', 'Member::do_update');
 $routes->add('master-search', 'Master::search');
 $routes->add('staff-search', 'Staff::search');
 $routes->add('send-contact', 'Home::send_contact');

@@ -2,17 +2,17 @@
   <div class="container">
     <div class="row pt-5 px-5">
       <div class="col-lg p-2">
-        <h5>Your Account Setting</h5>
+        <h5>Your Account Settings</h5>
       </div>
     </div>
     <?php if($msg != '') {?>
-      <div class="row p-2">
-        <div class="col-lg-8 py-3">
-          <p><?php echo $msg; ?></p>
+      <div class="row px-5">
+        <div class="col-lg-8">
+          <?php echo $msg; ?>
         </div>
       </div>
     <?php }?>
-    <form action="<?php echo base_url() . '/index.php/do-update/' . $user['id_user']; ?>" method="post">
+    <form action="<?php echo base_url() . '/index.php/do-update'; ?>" method="post">
       <div class="row px-5">
         <div class="col-lg-4">
           <label for="lname">Your Username</label>
@@ -34,6 +34,7 @@
     <div class="row px-5">
       <div class='col-lg px-3 pt-4'>
         <input class="btn btn-primary" type="submit" value=" Update Your Account ">
+        <a href="<?php echo base_url(); ?>" class="btn btn-secondary ms-2 ps-3">  Cancel &nbsp;<i class="bi bi-x-octagon"></i></a>
       </div>
     </div>
     </form>

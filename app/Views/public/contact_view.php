@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="row py-5">
-          <div class="col-lg-4 offset-lg-4 pb-2">
+          <div class="col-lg-4 offset-lg-4 pb-5">
             <!-- Form submit button -->
             <div class="d-grid">
               <button class="btn btn-primary btn-lg" type="submit">Submit</button>
@@ -42,17 +42,3 @@
   </form>
   </div>
 </section>
-
-  <div id="map">
-    <div id="googleMap" style="height: 310px; width: 100%">&nbsp;</div>
-      <script>
-      function myMap() {
-      var myCenter = new google.maps.LatLng(37.934490, -122.068848);
-      var mapProp = {center:myCenter, zoom:9, scrollwheel:true, draggable:true, mapTypeId:google.maps.MapTypeId.ROADMAP};
-      var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-      var marker = new google.maps.Marker({position:myCenter});
-      marker.setMap(map);
-      }
-      </script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeOLEmQMnt6O2kEXJ7llYr1xw2y-BEm6M&callback=myMap"></script>
-  </div>
