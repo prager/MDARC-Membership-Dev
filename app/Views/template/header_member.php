@@ -15,7 +15,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 fixed-top">
   <div class="container">
-      <a href="<?php echo base_url(); ?>" class="navbar-brand">MDARC Members Portal</a>
+      <a href="<?php echo base_url(); ?>" class="navbar-brand"><img src="/img/mdarc-avatar.jpg" alt="Logo" style="width:40px;" class="rounded-pill"> MDARC Members Portal</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
           <span class="navbar-toggler-icon"></span>
       </button>

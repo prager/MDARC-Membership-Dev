@@ -15,7 +15,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 fixed-top">
   <div class="container">
-      <a href="<?php echo base_url(); ?>" class="navbar-brand">MDARC Members Portal</a>
+      <a href="<?php echo base_url(); ?>" class="navbar-brand"><img src="/img/mdarc-avatar.jpg" alt="Logo" style="width:40px;" class="rounded-pill"> MDARC Members Portal</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -41,9 +41,9 @@
                 <a class="nav-link dropdown-toggle" href="#" id="accMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person"></i></a>
                 <ul class="dropdown-menu" aria-labelledby="accMenu">
-                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/logout'; ?>" class="nav-link"><i class="bi bi-person-check"></i> Logout</a></li>
+                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/logout'; ?>" class="nav-link"><i class="bi bi-box-arrow-up-right"></i> Logout</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/show-update'; ?>" class="nav-link disabled"> <i class="bi bi-gear"></i> Settings</a></li>
+                  <li><a class="dropdown-item"><a href="<?php echo base_url() . '/index.php/show-update'; ?>" class="nav-link"> <i class="bi bi-gear"></i> Settings</a></li>
                 </ul>
               </li>
               <form action="<?php echo base_url() . '/index.php/staff-search'; ?>" method="post" class="d-flex px-3">
