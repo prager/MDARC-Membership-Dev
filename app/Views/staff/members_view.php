@@ -4,13 +4,11 @@
                 <div class="row text-centerm">
                   <div class="col-lg-12">
                   <h4>MDARC Members Listing</h4>
-                        <div class="btn-group" role="group" aria-label="Basic example">
+                      <div class="btn-group" role="group" aria-label="Basic example">
                           <button type="button" class="btn btn-light btn-sm"><?php echo anchor('staff/download_cur_emails', 'Current Emails', 'class="text-decoration-none text-dark"')?></button>
                           <button type="button" class="btn btn-light btn-sm"><?php echo anchor('staff/download_all_mems', 'All Members', 'class="text-decoration-none text-dark"')?></button>
-                          <button type="button" class="btn btn-light btn-sm"><?php echo anchor('staff/download_cur_mems', 'Current Members', 'class="text-decoration-none text-dark"')?></button>
                           <button type="button" class="btn btn-light btn-sm"><?php echo anchor('staff/download_pay_next_mems', 'Emails Next Yr Dues', 'class="text-decoration-none text-dark"')?></button>
-                          <button type="button" class="btn btn-light btn-sm"><?php echo anchor('staff/download_pay_due', 'Dues not Paid', 'class="text-decoration-none text-dark"')?></button>
-                          <button type="button" class="btn btn-light btn-sm"><?php echo anchor('staff/download_due_emails', 'Emails not Paid', 'class="text-decoration-none text-dark"')?></button>
+                          <button type="button" class="btn btn-light btn-sm"><?php echo anchor('staff/download_due_emails', 'Emails Due', 'class="text-decoration-none text-dark"')?></button>
                         </div>
                   </div>
                 </div>

@@ -173,41 +173,24 @@ class Staff_model extends Model {
 //Push all the current members including voting members (Spouse and Additional types)
       if(($member->cur_year >= $cur_yr  && $member->silent_date == 0)) {
         array_push($all_cur_members, $elem);
-        if($elem['email'] != '') {
-          array_push($all_cur_emails, $elem['email']);
-        }
       }
 
 //Push all the paying members, which are primary and individual
       if(($member->cur_year >= $cur_yr  && $member->silent_date == 0) &&
         ($member->mem_type == 'Primary' || $member->mem_type == 'Individual')) {
         array_push($cur_members, $elem);
-        if($elem['email'] != '') {
-          array_push($cur_emails, $elem['email']);
-        }
-        if(strtoupper($member->hard_news) == 'TRUE') {
-          array_push($carrier, $elem);
-          $lbl_str .= $elem['fname'] . " " . $elem['lname'] . " " . $elem['callsign'] . "\n";
-          $lbl_str .= $elem['address'] . "\n";
-          $lbl_str .= $elem['city'] . ", " . $elem['state'] . " " . $elem['zip'] . "\n\n";
-        }
       }
 
 //Push those who didn't pay for the next year yet
       if(($member->cur_year == $cur_yr  && $member->silent_date == 0) &&
         ($member->mem_type == 'Primary' || $member->mem_type == 'Individual')) {
         array_push($pay_next, $elem);
-        if($elem['email'] != '') {
-          array_push($pay_next_email, $elem['email']);
-        }
       }
 
 //Collect the data of the member who didn't pay dues for current year
       elseif(($member->cur_year == (intval($cur_yr) - 1) && $member->silent_date == 0) &&
         ($member->mem_type == 'Primary' || $member->mem_type == 'Individual') && $member->cur_year > 0) {
-        if($elem['email'] != '') {
-          array_push($due_emails_arr, $elem['email']);
-        }
+
         array_push($pay_due, $elem);
       }
 
@@ -216,35 +199,6 @@ class Staff_model extends Model {
         array_push($silent_keys, $elem);
       }
     }
-
-//sort the emails alphabetically to detect possible erroneous emails
-    array_multisort($pay_next_email, SORT_ASC);
-    array_multisort($due_emails_arr, SORT_ASC);
-    array_multisort($cur_emails, SORT_ASC);
-    array_multisort($all_cur_emails, SORT_ASC);
-
-//build the text file for emails of current members for emailing The Carrier
-    $emails_str = '';
-    foreach($all_cur_emails as $email) {
-      $emails_str .= strtolower($email) . ', ';
-    }
-    file_put_contents('files/cur-emails.txt', $emails_str);
-
-    $pay_next_emails_str = '';
-    foreach($pay_next_email as $email) {
-      $pay_next_emails_str .= strtolower($email) . ', ';
-    }
-    file_put_contents('files/pay-next-emails.txt', $pay_next_emails_str);
-
-//build the text file for emails of members owing due payments
-    foreach($due_emails_arr as $email) {
-      $due_emails .= $email . ', ';
-    }
-    file_put_contents('files/due-emails.txt', $due_emails);
-
-//build the text file for the envelope labels for mailing The Carrier
-    file_put_contents('files/address-lbls.txt', $lbl_str);
-
 //sort the arrays for displaying
     array_multisort(array_column($pay_next, 'lname'), SORT_ASC, $pay_next);
     array_multisort(array_column($cur_members, 'lname'), SORT_ASC, $cur_members);
@@ -263,15 +217,6 @@ class Staff_model extends Model {
                       $mem['hard_news'].",".$mem['arrl'].",". str_replace(","," ", $mem['comment']) . "\n";
     }
     file_put_contents('files/all_members.csv', $all_mem_str);
-
-    $pay_due_str = "id,fname,lname,phone,cell phone,address,city,state,zip,email,mem type,callsign,license,cur yr,pay date,mem since,hard news,arrl,comment\n";
-    foreach($pay_due as $mem) {
-      $pay_due_str .= $mem['id'].",".$mem['fname'].",".$mem['lname'].",".$mem['h_phone'].",".$mem['w_phone'].","
-                  .str_replace(","," ", $mem['address']).",".$mem['city'].",".$mem['state'].",".$mem['zip'].",".$mem['email'].
-                      ",".$mem['mem_type'].",".$mem['callsign'].",".$mem['license'].",".$mem['cur_year'].",".$mem['pay_date_file'].",".$mem['mem_since'].",".
-                      $mem['hard_news'].",".$mem['arrl'].",". str_replace(","," ", $mem['comment']) . "\n";
-    }
-    file_put_contents('files/pay_due.csv', $pay_due_str);
 
     $curr_mem_str = "id,fname,lname,phone,cell phone,address,city,state,zip,email,mem type,callsign,license,cur yr,pay date,mem since,hard news,arrl,comment\n";
     foreach($all_cur_members as $mem) {
@@ -320,9 +265,82 @@ class Staff_model extends Model {
     $retarr['mem_types'] = $mem_types;
     $retarr['page'] = $param['page'];
     //$retarr['all_mems'] = $this->get_mem_list();
+    $this->put_files();
 
     return $retarr;
 
+  }
+
+/**
+* Puts data to csv and text files to download
+*/
+  private function put_files() {
+    $db      = \Config\Database::connect();
+    $builder = $db->table('tMembers');
+    $res = $builder->get()->getResult();
+
+// put all members in csv
+    $mem_str = "id,fname,lname,phone,cell phone,address,city,state,zip,email,mem type,callsign,license,cur yr,pay date,mem since,hard news,arrl,comment\n";
+    foreach ($res as $key => $mem) {
+      $mem_str .= $mem->id_members.",".$mem->fname.",".$mem->lname.",".$mem->h_phone.",".$mem->w_phone.","
+                  .str_replace(","," ", $mem->address).",".$mem->city.",".$mem->state.",".$mem->zip.",".$mem->email.
+                      ",".$mem->id_mem_types.",".$mem->callsign.",".$mem->license.",".$mem->cur_year.",".date('Y/m/d', $mem->paym_date).",".$mem->mem_since.",".
+                      $mem->hard_news.",".$mem->arrl_mem.",". str_replace(","," ", $mem->comment) . "\n";
+    }
+    file_put_contents('files/all_members.csv', $mem_str);
+
+// put members with one year overdue payments in csv and emails in txt
+    $builder->resetQuery();
+    $builder->where('cur_year', (date('Y', time())-1));
+    $builder->orderBy('email', 'ASC');
+    $res = $builder->get()->getResult();
+    $emails = '';
+    $mem_str = "id,fname,lname,phone,cell phone,address,city,state,zip,email,mem type,callsign,license,cur yr,pay date,mem since,hard news,arrl,comment\n";
+    foreach ($res as $key => $mem) {
+      if($mem->email != '') { $emails .= strtolower($mem->email) . ', '; }
+
+      $mem_str .= $mem->id_members.",".$mem->fname.",".$mem->lname.",".$mem->h_phone.",".$mem->w_phone.","
+                  .str_replace(","," ", $mem->address).",".$mem->city.",".$mem->state.",".$mem->zip.",".$mem->email.
+                      ",".$mem->id_mem_types.",".$mem->callsign.",".$mem->license.",".$mem->cur_year.",".date('Y/m/d', $mem->paym_date).",".$mem->mem_since.",".
+                      $mem->hard_news.",".$mem->arrl_mem.",". str_replace(","," ", $mem->comment) . "\n";
+
+    }
+    file_put_contents('files/pay_due.csv', $mem_str);
+    file_put_contents('files/due-emails.txt', $emails);
+
+//put emails of members who are two years behind emails in txt
+    $builder->resetQuery();
+    $builder->where('cur_year', (date('Y', time())-2));
+    $builder->orderBy('email', 'ASC');
+    $res = $builder->get()->getResult();
+    $emails = '';
+    foreach ($res as $key => $mem) {
+      if($mem->email != '') { $emails .= strtolower($mem->email) . ', '; }
+    }
+    file_put_contents('files/due-emails-2.txt', $emails);
+
+// all emails of current members
+    $builder->resetQuery();
+    $builder->where('cur_year >=', date('Y', time()));
+    $builder->orderBy('email', 'ASC');
+    $res = $builder->get()->getResult();
+    $emails = '';
+    foreach ($res as $key => $mem) {
+      if($mem->email != '') { $emails .= strtolower($mem->email) . ', '; }
+    }
+    file_put_contents('files/cur-emails.txt', $emails);
+
+// emails of current members to pay next year
+    $builder->resetQuery();
+    $builder->where('cur_year', date('Y', time()));
+    $builder->orderBy('email', 'ASC');
+    $res = $builder->get()->getResult();
+    $emails = '';
+    foreach ($res as $key => $mem) {
+      if($mem->email != '') { $emails .= strtolower($mem->email) . ', '; }
+    }
+    file_put_contents('files/pay-next-emails.txt', $emails);
+    $db->close();
   }
 
   public function get_mem($id) {
