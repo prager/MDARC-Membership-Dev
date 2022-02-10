@@ -82,10 +82,6 @@ class Staff_model extends Model {
     $db->close();
     $res = $builder->get()->getResult();
 
-//members who did not pay dues for next year yet
-    $pay_next = array();
-    $pay_next_email = array();
-
 //members current on their dues either Individual or Primary
     $cur_members = array();
     $cur_emails = array();
@@ -105,9 +101,6 @@ class Staff_model extends Model {
     $due_emails = '';
     $due_emails_arr = array();
 
-//lists everybody in MDARC
-    $all_members = array();
-
 //array for deleted members
     $del_members = array();
     $silent_keys = array();
@@ -116,11 +109,6 @@ class Staff_model extends Model {
     foreach($res as $member) {
       $elem = array();
       $elem['id'] = $member->id_members;
-
-      /*$elem['carrier'] = filter_var(trim(strtoupper($member->hard_news)), FILTER_VALIDATE_BOOLEAN);
-      $elem['dir'] = filter_var(trim(strtoupper($member->hard_dir)), FILTER_VALIDATE_BOOLEAN);
-      $elem['arrl'] = filter_var(trim(strtoupper($member->arrl_mem)), FILTER_VALIDATE_BOOLEAN);
-      $elem['mem_card'] = filter_var(trim(strtoupper($member->mem_card)), FILTER_VALIDATE_BOOLEAN);*/
 
 //get family members from member model
       $fam_mems = $this->get_fam_mems($elem['id']);
@@ -167,8 +155,6 @@ class Staff_model extends Model {
       $member->usr_type == 98 ? $elem['silent'] = TRUE : $elem['silent'] = FALSE;
       $member->cur_year == 99 ? array_push($del_members, $elem) : FALSE;
 
-//Push all the members including silent keys
-      array_push($all_members, $elem);
 
 //Push all the current members including voting members (Spouse and Additional types)
       if(($member->cur_year >= $cur_yr  && $member->silent_date == 0)) {
@@ -179,12 +165,6 @@ class Staff_model extends Model {
       if(($member->cur_year >= $cur_yr  && $member->silent_date == 0) &&
         ($member->mem_type == 'Primary' || $member->mem_type == 'Individual')) {
         array_push($cur_members, $elem);
-      }
-
-//Push those who didn't pay for the next year yet
-      if(($member->cur_year == $cur_yr  && $member->silent_date == 0) &&
-        ($member->mem_type == 'Primary' || $member->mem_type == 'Individual')) {
-        array_push($pay_next, $elem);
       }
 
 //Collect the data of the member who didn't pay dues for current year
@@ -200,33 +180,11 @@ class Staff_model extends Model {
       }
     }
 //sort the arrays for displaying
-    array_multisort(array_column($pay_next, 'lname'), SORT_ASC, $pay_next);
     array_multisort(array_column($cur_members, 'lname'), SORT_ASC, $cur_members);
     array_multisort(array_column($all_cur_members, 'lname'), SORT_ASC, $all_cur_members);
     array_multisort(array_column($carrier, 'lname'), SORT_ASC, $carrier);
     array_multisort(array_column($pay_due, 'lname'), SORT_ASC, $pay_due);
-    array_multisort(array_column($all_members, 'lname'), SORT_ASC, $all_members);
     array_multisort(array_column($silent_keys, 'lname'), SORT_ASC, $silent_keys);
-
-//build the csv file for downloading all the members
-    $all_mem_str = "id,fname,lname,spouse_name,phone,cell phone,address,city,state,zip,email,mem type,callsign,license,cur yr,pay date,mem since,hard news,arrl,comment\n";
-    foreach($all_members as $mem) {
-      $all_mem_str .= $mem['id'].",".$mem['fname'].",".$mem['lname'].",".$mem['spouse_name'].",".$mem['h_phone'].",".$mem['w_phone'].","
-                  .str_replace(","," ", $mem['address']).",".$mem['city'].",".$mem['state'].",".$mem['zip'].",".$mem['email'].
-                      ",".$mem['mem_type'].",".$mem['callsign'].",".$mem['license'].",".$mem['cur_year'].",".$mem['pay_date_file'].",".$mem['mem_since'].",".
-                      $mem['hard_news'].",".$mem['arrl'].",". str_replace(","," ", $mem['comment']) . "\n";
-    }
-    file_put_contents('files/all_members.csv', $all_mem_str);
-
-    $curr_mem_str = "id,fname,lname,phone,cell phone,address,city,state,zip,email,mem type,callsign,license,cur yr,pay date,mem since,hard news,arrl,comment\n";
-    foreach($all_cur_members as $mem) {
-      $curr_mem_str .= $mem['id'].",".$mem['fname'].",".$mem['lname'].",".$mem['h_phone'].",".$mem['w_phone'].","
-                  .str_replace(","," ", $mem['address']).",".$mem['city'].",".$mem['state'].",".$mem['zip'].",".$mem['email'].
-                      ",".$mem['mem_type'].",".$mem['callsign'].",".$mem['license'].",".$mem['cur_year'].",".$mem['pay_date_file'].",".$mem['mem_since'].",".
-                      $mem['hard_news'].",".$mem['arrl'].",". str_replace(","," ", $mem['comment']) . "\n";
-    }
-    file_put_contents('files/curr_mems.csv', $curr_mem_str);
-
 
     $retarr = array();
 
@@ -268,7 +226,60 @@ class Staff_model extends Model {
     $this->put_files();
 
     return $retarr;
+  }
 
+  /**
+  * Gets directory data
+  */
+  public function get_dir_data() {
+    $mem_types = $this->get_mem_types();
+    $db      = \Config\Database::connect();
+    $builder = $db->table('tMembers');
+    $res = $builder->get()->getResult();
+    $all_cur_members = array();
+    //The monster loop harvesting all the members data
+        foreach($res as $member) {
+          $elem = array();
+          $elem['id'] = $member->id_members;
+
+    //get family members from member model
+          $fam_mems = $this->get_fam_mems($elem['id']);
+          $elem['fam_mems'] = $fam_mems['fam_mems'];
+          $elem['fam_flag'] = $fam_mems['fam_flag'];
+
+    //set the true or false values for boolean db entries
+          $member->h_phone == NULL ? $elem['h_phone'] = '000-000-0000' : $elem['h_phone'] = $member->h_phone;
+          $member->w_phone == NULL ? $elem['w_phone'] = '000-000-0000' : $elem['w_phone'] = $member->w_phone;
+          $elem['phone_unlisted'] = $member->h_phone_unlisted;
+          $elem['cell_unlisted'] = $member->w_phone_unlisted;
+          $elem['email_unlisted'] = $member->email_unlisted;
+          $elem['fname'] = $member->fname;
+          $elem['lname'] = $member->lname;
+          $member->address == NULL ? $elem['address'] = 'N/A' : $elem['address'] = $member->address;
+          $member->city == NULL ? $elem['city'] = 'N/A' : $elem['city'] = $member->city;
+          $member->state == NULL ? $elem['state'] = 'CA' : $elem['state'] = $member->state;
+          $member->zip == NULL ? $elem['zip'] = '00000' : $elem['zip'] = $member->zip;
+          $elem['id_mem_types'] = $member->id_mem_types;
+          $elem['callsign'] = $member->callsign;
+          $elem['license'] = $member->license;
+          $elem['spouse_name'] = $member->spouse_name;
+          $elem['spouse_call'] = $member->spouse_call;
+          $member->email == NULL ? $elem['email'] = 'N/A' : $elem['email'] = $member->email;
+          $elem['ok_mem_dir'] = $member->ok_mem_dir;
+          $cur_yr = date('Y', time());
+          $member->silent_date > 1 ? $elem['silent_date'] = date('Y-m-d', $member->silent_date) : $elem['silent_date'] = 'No Date';
+          $elem['silent_year'] = $member->silent_year;
+          $member->usr_type == 98 ? $elem['silent'] = TRUE : $elem['silent'] = FALSE;
+
+    //Push all the current members including voting members (Spouse and Additional types)
+          if(($member->cur_year >= $cur_yr  && $member->silent_date == 0 && strtolower($member->ok_mem_dir) == 'true')) {
+            array_push($all_cur_members, $elem);
+          }
+        }
+        array_multisort(array_column($all_cur_members, 'lname'), SORT_ASC, $all_cur_members);
+        $retarr['dir'] = $all_cur_members;
+        $retarr['dir_cnt'] = count($all_cur_members);
+        return $retarr;
   }
 
 /**

@@ -329,7 +329,7 @@ class Staff extends BaseController {
 			echo view('template/header_staff');
 			$param['states'] = $this->data_mod->get_states_array();
 			$param['lic'] = $this->data_mod->get_lic();
-			echo view('staff/print_dir_view', $this->staff_mod->get_mems($param));
+			echo view('staff/print_dir_view', $this->staff_mod->get_dir_data());
 		}
 		else {
 			echo view('template/header');
