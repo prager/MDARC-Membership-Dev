@@ -2,15 +2,34 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="showMemLabel"><?php echo $mem['fname'] . ' ' . $mem['lname'] . ' ' . $mem['callsign']; ?></h5>
+        <h5 class="modal-title" id="showMemLabel"><?php echo $mem['fname'] . ' ' . $mem['lname'] . ' ' . $mem['callsign'] . ' / ID: ' . $mem['id']; ?></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="<?php echo base_url() . '/index.php/edit-mem/'. $mem['id']; ?>" method="post">
       <div class="modal-body">
       <section class="px-2">
+        <?php if($mem['id_mem_types'] == 3) { ?>
         <div class="row">
-          <div class="col-lg py-1">
-            <?php echo 'Callsign: ' . $mem['callsign']; ?>
+          <div class="col-lg">
+            <p>Family member of: <?php echo $mem['parent_fname'] . ' ' . $mem['parent_lname'] . ' / Member Id: ' . $mem['id_parent']; ?></p>
+          </div>
+        </div>
+        <?php }
+        if(count($mem['fam_mems']) != 0) { ?>
+        <div class="row pt-2">
+          <div class="col p-3">
+            <p>Family Members:<br>
+            <?php foreach($mem['fam_mems'] as $fam_mem) {
+              echo '* ' . $fam_mem['fname'] . ' ' . $fam_mem['lname'] . '<br>';
+            }?>
+          </div>
+        </div>
+        <?php }?>
+        <div class="row">
+          <div class="col-lg">
+            <?php if($mem['id_mem_types'] == 3) { ?>
+            <br><p>Family member of: <?php echo $mem['parent_fname'] . ' ' . $mem['parent_lname'] . ' (Member Id: ' . $mem['id_parent'] . ')'; ?></p>
+            <?php }?>
           </div>
         </div>
         <div class="row">

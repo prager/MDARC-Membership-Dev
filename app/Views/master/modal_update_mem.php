@@ -9,6 +9,13 @@
       <div class="modal-body">
       <section class="px-2">
         <div class="row">
+          <div class="col-lg">
+            <?php if($mem['id_mem_types'] == 3) { ?>
+            <br><p>Family member of: <?php echo $mem['parent_fname'] . ' ' . $mem['parent_lname'] . ' / Member Id: ' . $mem['id_parent']; ?></p>
+            <?php }?>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-lg py-2">
             <label for="fname">First Name</label>
             <input type="text" class="form-control" id="fname" name="fname" value="<?php echo $mem['fname']; ?>">

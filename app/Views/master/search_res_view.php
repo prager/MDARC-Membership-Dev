@@ -33,6 +33,9 @@
                      elseif($mem['id_mem_types'] == 1) {?>
                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#addFMems<?php echo $mem['id']; ?>"><?php echo $mem['mem_type']; ?></a></td>
                        <?php include 'modal_add_fams.php'; ?>
+               <?php }
+                     else {?>
+                       <?php echo $mem['mem_type']; ?></td>
                <?php } ?>
              </td>
              <td><?php echo $mem['callsign']; ?></td>

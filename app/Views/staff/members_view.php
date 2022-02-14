@@ -15,7 +15,7 @@
                 <div class="row align-items-center justify-content-between">
                   <ul class="nav nav-pills m-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#cur_mems" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Current Paying Members</button>
+                      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#cur_mems" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Current Members</button>
                     </li>
                     <li class="nav-item" role="presentation">
                       <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#carrier" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Carrier Copy</button>
@@ -63,9 +63,14 @@
                           <td><a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#showMem<?php echo $mem['id']; ?>"><?php echo $mem['lname'] . ', ' . $mem['fname']; ?></a></td>
                           <?php include 'modal_show_mem.php'; ?>
                           <td><?php echo $mem['cur_year']; ?></td>
-                           <td>
-                             <?php echo $mem['mem_type']; ?>
-                             <!-- Add modal call with family members -->
+                          <td>
+                          <?php if ($mem['id_mem_types'] == 2){ ?>
+                           <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#fMems<?php echo $mem['id']; ?>"><?php echo $mem['mem_type']; ?></a> </td>
+                           <?php include 'modal_fams.php'; ?>
+                          <?php }
+                           else {
+                              echo $mem['mem_type'];
+                            } ?>
                            </td>
                            <td><?php echo $mem['callsign']; ?></td>
                            <td><?php echo $mem['license']; ?></td>
@@ -130,7 +135,15 @@
                           <td><a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#showMem<?php echo $mem['id']; ?>"><?php echo $mem['lname'] . ', ' . $mem['fname']; ?></a></td>
                           <?php include 'modal_show_mem.php'; ?>
                           <td><?php echo $mem['cur_year']; ?></td>
-                           <td><?php echo $mem['mem_type']; ?></td>
+                           <td>
+                             <?php if ($mem['id_mem_types'] == 2){ ?>
+                              <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#fMems<?php echo $mem['id']; ?>"><?php echo $mem['mem_type']; ?></a> </td>
+                              <?php include 'modal_fams.php'; ?>
+                             <?php }
+                              else {
+                                 echo $mem['mem_type'];
+                               } ?>
+                           </td>
                            <td><?php echo $mem['callsign']; ?></td>
                            <td><?php echo $mem['license']; ?></td>
                            <td><?php echo $mem['pay_date']; ?></td>

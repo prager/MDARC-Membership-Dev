@@ -8,6 +8,13 @@
       <form action="<?php echo base_url() . '/index.php/edit-mem/'. $mem['id']; ?>" method="post">
       <div class="modal-body">
       <section class="px-2">
+        <?php if($mem['id_mem_types'] == 3) { ?>
+        <div class="row">
+          <div class="col-lg">
+            <p>Family member of: <?php echo $mem['parent_fname'] . ' ' . $mem['parent_lname'] . ' / Member Id: ' . $mem['id_parent']; ?></p>
+          </div>
+        </div>
+        <?php }?>
         <div class="row">
           <div class="col-lg py-2">
             <label for="fname">First Name</label>
