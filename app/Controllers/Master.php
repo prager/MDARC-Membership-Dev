@@ -22,6 +22,7 @@ class Master extends BaseController {
 	    }
 			echo view('template/footer');
 	}
+
 	public function search() {
 		if($this->check_master()) {
 	  	echo view('template/header_master.php');
@@ -31,6 +32,26 @@ class Master extends BaseController {
 			$data['lic'] = $this->data_mod->get_lic();
 			$data['mem_types'] = $this->staff_mod->get_mem_types();
 			echo view('master/search_res_view.php', $data);
+	   }
+    else {
+	  	echo view('template/header');
+			$this->login_mod->logout();
+      $data['title'] = 'Login Error';
+      $data['msg'] = 'There was an error while checking your credentials.<br><br>';
+      echo view('status/status_view.php', $data);
+    }
+		echo view('template/footer.php');
+	}
+
+	public function res_mem() {
+		if($this->check_master()) {
+	  	echo view('template/header_master.php');
+			$this->uri->setSilent();
+			$data['mem'] = $this->staff_mod->get_mem($this->uri->getSegment(2));
+			$data['states'] = $this->data_mod->get_states_array();
+			$data['lic'] = $this->data_mod->get_lic();
+			$data['mem_types'] = $this->staff_mod->get_mem_types();
+			echo view('master/member_view.php', $data);
 	   }
     else {
 	  	echo view('template/header');
@@ -152,7 +173,7 @@ class Master extends BaseController {
 					$this->request->getPost('arrl') == 'on' ? $param['arrl_mem'] = 'TRUE' : $param['arrl_mem'] = 'FALSE';
 					$this->request->getPost('hard_news') == 'on' ? $param['hard_news'] = 'TRUE' : $param['hard_news'] = 'FALSE';
 					$this->request->getPost('dir') == 'on' ? $param['hard_dir'] = 'TRUE' : $param['hard_dir'] = 'FALSE';
-					$this->request->getPost('mem_card') == 'on' ? $param['mem_card'] = 'TRUE' : $param['mem_card'] = 'FALSE';					
+					$this->request->getPost('mem_card') == 'on' ? $param['mem_card'] = 'TRUE' : $param['mem_card'] = 'FALSE';
 					$this->request->getPost('dir_ok') == 'on' ? $param['ok_mem_dir'] = 'TRUE' : $param['ok_mem_dir'] = 'FALSE';
 
 					$this->uri->setSilent();

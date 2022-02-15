@@ -11,9 +11,9 @@
         <div class="row pt-2">
           <div class="col p-3">
           <?php  if(count($mem['fam_mems']) != 0) {
-              foreach($mem['fam_mems'] as $fam_mem) {
-                echo $fam_mem['fname'] . ' ' . $fam_mem['lname'] . '<br>';
-              }?>
+              foreach($mem['fam_mems'] as $fam_mem) { ?>
+                <a href="<?php echo base_url() . '/index.php/show-mem/' . $fam_mem['id_members'];?>" class="text-decoration-none"><?php echo $fam_mem['fname'] . ' ' . $fam_mem['lname']; ?></a> / Id: <?php echo $fam_mem['id_members']; ?><br>
+            <?php  }?>
             <?php }?>
           </div>
         </div>

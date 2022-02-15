@@ -145,6 +145,12 @@
                           <input class="form-check-input" type="checkbox" name="arrl" />
                         </div>
                       </div>
+                      <div class="col-lg-4 p-3">
+                        <div class="form-check">
+                          <label class="form-check-label" for="arrl"> List in Directory OK </label>
+                          <input class="form-check-input" type="checkbox" name="ok_mem_dir" />
+                        </div>
+                      </div>
                     </div>
                     <div class="row">
                       <div class="col-lg py-2">

@@ -17,10 +17,9 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($mems as $key => $mem) {?>
                 <tr>
-                  <td><a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#showMem<?php echo $mem['id']; ?>"><?php echo $mem['lname'] . ', ' . $mem['fname']; ?></a></td>
-                  <?php include 'modal_show_mem.php'; ?>
+                  <td><a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#editMem<?php echo $mem['id']; ?>"><?php echo $mem['lname'] . ', ' . $mem['fname']; ?></a></td>
+                  <?php include 'modal_update_mem.php'; ?>
                   <td><?php echo $mem['cur_year']; ?></td>
                    <td>
                      <?php echo $mem['mem_type']; ?>
@@ -39,7 +38,6 @@
                    }?>
                  </td>
                 </tr>
-              <?php }?>
               </tbody>
             </table>
           </div>

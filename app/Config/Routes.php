@@ -29,6 +29,8 @@ $routes->add('faqs', 'Home::faqs');
 $routes->add('regex', 'Master::regex');
 $routes->add('contact', 'Home::contact');
 $routes->add('show-update', 'Member::show_update');
+$routes->add('show-mem/(:num)', 'Staff::show_mem');
+$routes->add('res-mem/(:num)', 'Master::res_mem');
 $routes->add('do-update', 'Member::do_update');
 $routes->add('master-search', 'Master::search');
 $routes->add('staff-search', 'Staff::search');

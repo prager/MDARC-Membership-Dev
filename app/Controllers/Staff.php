@@ -42,6 +42,26 @@ class Staff extends BaseController {
 		echo view('template/footer.php');
 	}
 
+	public function show_mem() {
+		if($this->check_staff()) {
+	  	echo view('template/header_staff.php');
+			$this->uri->setSilent();
+			$data['mem'] = $this->staff_mod->get_mem($this->uri->getSegment(2));
+			$data['states'] = $this->data_mod->get_states_array();
+			$data['lic'] = $this->data_mod->get_lic();
+			$data['mem_types'] = $this->staff_mod->get_mem_types();
+			echo view('staff/member_view.php', $data);
+	   }
+    else {
+	  	echo view('template/header');
+			$this->login_mod->logout();
+      $data['title'] = 'Login Error';
+      $data['msg'] = 'There was an error while checking your credentials.<br><br>';
+      echo view('status/status_view.php', $data);
+    }
+		echo view('template/footer.php');
+	}
+
 	public function show_members() {
 		if($this->check_staff()) {
 			echo view('template/header_staff');
