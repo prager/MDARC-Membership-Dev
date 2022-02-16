@@ -510,6 +510,21 @@ class Master extends BaseController {
 		echo view('template/footer');
 	}
 
+	public function master_faqs() {
+		if($this->check_master()) {
+			echo view('template/header_master');
+			echo view('master/faqs_view', $this->staff_mod->get_faqs());
+		}
+		else {
+			echo view('template/header');
+			$data['title'] = 'Login Error';
+			$data['msg'] = 'There was an error while checking your credentials. Click ' . anchor('Home/reset_password', 'here') .
+			' to reset your password or go to home page ' . anchor('Home', 'here'). '<br><br>';
+			echo view('status/status_view', $data);
+		}
+		echo view('template/footer');
+	}
+
 	public function regex() {
 		echo view('template/header_master');
 		$data['title'] = 'Regex';

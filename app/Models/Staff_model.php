@@ -384,7 +384,7 @@ class Staff_model extends Model {
     $fam_mems = $this->get_fam_mems($elem['id']);
     $elem['fam_mems'] = $fam_mems['fam_mems'];
     $elem['fam_flag'] = $fam_mems['fam_flag'];
-    
+
     $elem['carrier'] = trim(strtoupper($member->hard_news));
     $elem['dir'] = trim(strtoupper($member->hard_dir));
     $elem['arrl'] = trim(strtoupper($member->arrl_mem));
@@ -1071,4 +1071,29 @@ class Staff_model extends Model {
       return $elem;
     }
 
+    public function get_faqs() {
+      $db      = \Config\Database::connect();
+      $builder = $db->table('faqs');
+      $cnt = $builder->countAllResults();
+      $retarr = array();
+      $retarr['faqs'] = array();
+      if($cnt > 0) {
+        $builder->resetQuery();
+        $res = $builder->get()->getResult();
+        foreach ($res as $key => $faq) {
+          $elem = array();
+          $elem['id'] = $faq->id_faqs;
+          $elem['theq'] = $faq->theq;
+          $elem['thea'] = $faq->thea;
+          $elem['id_user_type'] = $faq->id_user_type;
+          array_push($retarr, $elem);
+        }
+      }
+      else {
+        $retarr['faqs'] = NULL;
+      }
+      $user_mod = new \App\Models\User_model();
+      $retarr['mem_types'] = $user_mod->get_user_types();
+      return $retarr;
+    }
 }

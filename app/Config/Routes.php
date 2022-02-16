@@ -26,6 +26,7 @@ $routes->setAutoRoute(true);
 $routes->add('home', 'Home::index');
 $routes->add('Home', 'Home::index');
 $routes->add('faqs', 'Home::faqs');
+$routes->add('master-faqs', 'Master::master_faqs');
 $routes->add('regex', 'Master::regex');
 $routes->add('contact', 'Home::contact');
 $routes->add('show-update', 'Member::show_update');

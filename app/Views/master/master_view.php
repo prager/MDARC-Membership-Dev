@@ -11,6 +11,7 @@
               <p>Staff page: <a href="<?php echo base_url() . '/index.php/staff'; ?>" class="text-decoration-none">Staff Page</a></p>
               <p>Member page: <a href="<?php echo base_url() . '/index.php/member'; ?>" class="text-decoration-none">Member Page</a></p>
               <p>Members: <a href="<?php echo base_url() . '/index.php/members'; ?>" class="text-decoration-none">Members</a></p>
+              <p>FAQs: <a href="<?php echo base_url() . '/index.php/master-faqs'; ?>" class="text-decoration-none">FAQs Editing</a></p>
               <!--<p>Special function: <?php //echo anchor('staff/verify_payment', 'Verify Payments'); ?></p>-->
               <!--<p>Download user types: <?php echo anchor('master/download_user_types', 'Download User Types'); ?>-->
               <!--<p>Download users: <?php echo anchor('master/download_users', 'Download Users'); ?>-->

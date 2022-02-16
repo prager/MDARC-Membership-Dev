@@ -53,7 +53,7 @@
                     MDARC established new <span class="text-decoration-underline text-success">Digital Media Review Team</span> for its websites development, social media interactions, etc.
                 </p>
                 <p>
-                    In addition to the work on Membership portal, the development will include websites for all the MDARC activities including Pacificon, public events, license testing and monthly meetings with lectures on many ham radio topics. And that is not all by far. Learn more by accessing the <a href="<?php echo base_url() . '/index.php/faqs'; ?>" class="text-decoration-none">FAQs</a> and more technical details by clicking on this <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#tech">About</a> link.
+                    In addition to the work on Membership portal, the development will include websites for all the MDARC activities including Pacificon, public events, license testing and monthly meetings with lectures on many ham radio topics. And that is not all by far. Learn more by accessing the <a href="<?php echo base_url() . '/index.php/faqs'; ?>" class="text-decoration-none">FAQs</a> and some technical details by clicking on this <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#tech">About</a> link.
                 </p>
             </div>
         </div>
