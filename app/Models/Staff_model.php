@@ -90,10 +90,6 @@ class Staff_model extends Model {
     $all_cur_members = array();
     $all_cur_emails = array();
 
-//members who want hardcopy of The Carrier and string for the address labels
-    $carrier = array();
-    $lbl_str = "";
-
 //array of members owing dues
     $pay_due = array();
 
@@ -182,7 +178,6 @@ class Staff_model extends Model {
 //sort the arrays for displaying
     array_multisort(array_column($cur_members, 'lname'), SORT_ASC, $cur_members);
     array_multisort(array_column($all_cur_members, 'lname'), SORT_ASC, $all_cur_members);
-    array_multisort(array_column($carrier, 'lname'), SORT_ASC, $carrier);
     array_multisort(array_column($pay_due, 'lname'), SORT_ASC, $pay_due);
     array_multisort(array_column($silent_keys, 'lname'), SORT_ASC, $silent_keys);
 
@@ -210,8 +205,7 @@ class Staff_model extends Model {
     $retarr['dir'] = $all_cur_members;
     $retarr['dir_cnt'] = count($all_cur_members);
     $retarr['cnt_cur'] = count($cur_members);
-    $retarr['cnt_carr'] = count($carrier);
-    $retarr['carrier'] = $carrier;
+    $retarr['carrier'] = $this->get_carrier();
     $retarr['cnt_pay'] = count($pay_due);
     $retarr['pay_due'] = $pay_due;
 
@@ -735,6 +729,11 @@ class Staff_model extends Model {
     $builder->where('paym_date >', $from);
     $builder->where('paym_date <', $to);
     $builder->where('mem_since <', date('Y', $to));
+    //$builder->where('id_mem_types', 1);
+    //$builder->orWhere('id_mem_types', 2);
+    //echo '<br><br><br> this yr: ' . date('Y', $to);
+    //echo '<br>from: ' . $from . ' / ' . date('Y-m-d', $from);
+    //echo '<br>to: ' . $to . ' / ' . date('Y-m-d', $to);
     $db->close;
     $res = $builder->get()->getResult();
     $retarr = array();
@@ -802,8 +801,8 @@ class Staff_model extends Model {
     $retarr['dir_cnt'] = count($this->get_all_mems($param['date_stop']));
     $retarr['cnt_cur'] = count($this->get_paying_mems($param));
 		$param['states'] = $this->data_mod->get_states_array();
-    $retarr['date_start'] = date('Y-m-d', $param['date_start']);
-    $retarr['date_stop'] = date('Y-m-d', $param['date_stop']);
+    $retarr['date_start'] = date('Y-m-d', intval($param['date_start']));
+    $retarr['date_stop'] = date('Y-m-d', intval($param['date_stop']));
     $retarr['renewals_period'] = count($this->get_renewals($param['date_start'], $param['date_stop']));
     $retarr['new_mems_period'] = count($this->get_new_mems($param['date_start'], $param['date_stop']));
     $retarr['cnt_renew'] = count($this->get_renewals_year($param['date_stop']));
@@ -947,6 +946,8 @@ class Staff_model extends Model {
     $db = \Config\Database::connect();
     $builder = $db->table('tMembers');
     $builder->where('id_mem_types', 1);
+    $builder->where('cur_year', date('Y', $param['date_stop']));
+    $builder->orWhere('id_mem_types', 2);
     $builder->where('cur_year', date('Y', $param['date_stop']));
     $res = $builder->get()->getResult();
     $retarr = array();
@@ -1094,6 +1095,33 @@ class Staff_model extends Model {
       }
       $user_mod = new \App\Models\User_model();
       $retarr['mem_types'] = $user_mod->get_user_types();
+      return $retarr;
+    }
+
+    /**
+    * Get those who are current members and subscribed to The Carrier
+    */
+    public function get_carrier() {
+      $db      = \Config\Database::connect();
+      $builder = $db->table('tMembers');
+      $builder->where('hard_news', 'true');
+      $builder->where( 'cur_year >', 2021);
+      $builder->orderBy('lname', 'ASC');
+      $res = $builder->get()->getResult();
+      $retarr = array();
+      foreach ($res as $key => $mem) {
+        $mem_arr = array();
+        $mem_arr['id'] = $mem->id_members;
+        $mem_arr['fname'] = $mem->fname;
+        $mem_arr['lname'] = $mem->lname;
+        $mem_arr['callsign'] = $mem->callsign;
+        $mem_arr['address'] = $mem->address;
+        $mem_arr['city'] = $mem->city;
+        $mem_arr['state'] = $mem->state;
+        $mem_arr['zip'] = $mem->zip;
+        array_push($retarr, $mem_arr);
+      }
+      $db->close();
       return $retarr;
     }
 }

@@ -30,10 +30,10 @@
                 <td>New Members For The Year</td>
                 <td><?php echo $new_mems_period; ?></td>
               </tr>
-              <tr>
+              <!--<tr>
                 <td>Renewals This Year</td>
-                <td><?php echo $cnt_renew; ?></td>
-              </tr>
+                <td><?php //echo $cnt_renew; ?></td>
+              </tr>-->
               <tr>
                 <td>Renewals from <?php echo $date_start . ' to ' .  $date_stop; ?></td>
                 <td><?php echo $renewals_period; ?></td>

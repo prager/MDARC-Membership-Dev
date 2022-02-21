@@ -323,4 +323,16 @@ public function put_user_types() {
     return $retval;
   }
 
+  public function carr_check() {
+    $db      = \Config\Database::connect();
+    $builder = $db->table('tMembers');
+    $res = $builder->get()->getResult();
+    foreach ($res as $key => $mem) {
+      $update = array('hard_dir' => strtolower($mem->hard_dir), 'hard_news' => strtolower($mem->hard_news), 'arrl_mem' => strtolower($mem->arrl_mem), 'ok_mem_dir' => strtolower($mem->ok_mem_dir), 'mem_card' => strtolower($mem->mem_card));
+      $builder->resetQuery();
+      $builder->update($update, ['id_members' => $mem->id_members]);
+    }
+    return 'Carrier check done!';
+  }
+
 }

@@ -308,6 +308,7 @@ class Staff extends BaseController {
 			}
 			else {
 				$param['date_start'] = time() - (60 * 60 * 24 * 30);
+				//echo '<br><br><br>date start staff: ' . date('Y-m-d', $param['date_start']);
 				$param['date_stop'] = time();
 			}
 			echo view('staff/staff_report_view', $this->staff_mod->get_rep($param));

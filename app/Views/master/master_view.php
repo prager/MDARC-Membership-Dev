@@ -18,7 +18,7 @@
               <p>Members: <a href="<?php echo base_url() . '/index.php/edit-users'; ?>" class="text-decoration-none">Edit Users</a></p>
               <!--<p>Fill id_mem_types: <?php echo anchor('master/mem_types', 'Fill Mem Types'); ?>-->
               <!--<p>Set Callsign <a href="#" data-toggle="modal" data-target="#setTbl">Convert Prefix and Suffix to Callsign</a></p>-->
-              <p>Regex: <a href="<?php echo base_url() . '/index.php/regex'; ?>" class="text-decoration-none"> Regex</a></p>
+              <p>Carr Check: <a href="<?php echo base_url() . '/index.php/regex'; ?>" class="text-decoration-none"> Carr Check</a></p>
             </div>
         </div>
     </div>

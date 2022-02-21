@@ -527,8 +527,10 @@ class Master extends BaseController {
 
 	public function regex() {
 		echo view('template/header_master');
-		$data['title'] = 'Regex';
-		$data['msg'] = $this->master_mod->regex('PPass##1234');
+		//$data['title'] = 'Regex';
+		$data['title'] = 'Carr Check';
+		//$data['msg'] = $this->master_mod->regex('PPass##1234');
+		$data['msg'] = $this->master_mod->carr_check();
 		echo view('status/status_view', $data);
 		echo view('template/footer');
 	}
