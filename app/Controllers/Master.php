@@ -436,6 +436,7 @@ class Master extends BaseController {
 	public function reset_user() {
 		if($this->check_master()) {
 			echo view('template/header_master');
+				$this->uri->setSilent();
 				$param['id_user'] = $this->uri->getSegment(2);
 				$param['username'] = $this->request->getPost('username');
 				$param['pass'] = $this->request->getPost('pass');
@@ -513,7 +514,9 @@ class Master extends BaseController {
 	public function master_faqs() {
 		if($this->check_master()) {
 			echo view('template/header_master');
-			echo view('master/faqs_view', $this->staff_mod->get_faqs());
+			$data = $this->staff_mod->get_faqs();
+			$data['msg'] = '';
+			echo view('master/faqs_view', $data);
 		}
 		else {
 			echo view('template/header');
@@ -522,6 +525,67 @@ class Master extends BaseController {
 			' to reset your password or go to home page ' . anchor('Home', 'here'). '<br><br>';
 			echo view('status/status_view', $data);
 		}
+		echo view('template/footer');
+	}
+
+	public function edit_faq() {
+		if($this->check_master()) {
+			echo view('template/header_master');
+			$this->uri->setSilent();
+			$param['id'] = $this->uri->getSegment(2);
+			$param['id_user'] = $this->login_mod->get_cur_user()['id_user'];
+			$param['theq'] = $this->request->getPost('theQ');
+			$param['thea'] = $this->request->getPost('theA');
+			/*echo '<br><br><br>thea: ' . $param['thea'];
+			echo '<br>theq: ' . $param['theq'];
+			echo '<br>user: ' . $param['id_user'];
+			if($param['id'] == NULL) {
+				echo '<br>yess!';
+			}
+			echo '<br>id: ' . $param['id'];
+			echo '<br>test: ';*/
+			$param['id_user_type'] = $this->request->getPost('mem_types');
+			$this->staff_mod->edit_faq($param);
+			$data = $this->staff_mod->get_faqs();
+			$data['msg'] = '<p class="text-danger"> Record updated!</p>';
+			echo view('master/faqs_view', $data);
+		}
+		else {
+			echo view('template/header');
+			$data['title'] = 'Login Error';
+			$data['msg'] = 'There was an error while checking your credentials. Click ' . anchor('Home/reset_password', 'here') .
+			' to reset your password or go to home page ' . anchor('Home', 'here'). '<br><br>';
+			echo view('status/status_view', $data);
+		}
+		echo view('template/footer');
+	}
+
+	public function delete_faq() {
+		if($this->check_master()) {
+			echo view('template/header_master');
+			$id = $this->uri->getSegment(2);
+			$this->staff_mod->delete_faq($id);
+			$data = $this->staff_mod->get_faqs();
+			$data['msg'] = '<p class="text-danger"> Record updated!</p>';
+			echo view('master/faqs_view', $data);
+		}
+		else {
+			echo view('template/header');
+			$data['title'] = 'Login Error';
+			$data['msg'] = 'There was an error while checking your credentials. Click ' . anchor('Home/reset_password', 'here') .
+			' to reset your password or go to home page ' . anchor('Home', 'here'). '<br><br>';
+			echo view('status/status_view', $data);
+		}
+		echo view('template/footer');
+	}
+
+	public function master_test() {
+		echo view('template/header_master');
+		$param['msg'] = $this->request->getPost('thequestion');
+		echo '<br><br><br>theq: ' . $param['msg'];
+		$data['title'] = 'Master Check';
+		$data['msg'] = 'Master check. <br><br>';
+		echo view('status/status_view', $data);
 		echo view('template/footer');
 	}
 

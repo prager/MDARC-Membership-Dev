@@ -32,7 +32,8 @@ class Home extends BaseController {
     else {
       echo view('template/header_' . $this->login_mod->get_cur_user()['controller']);
     }
-    echo view('public/faqs_view');
+    $data = $this->staff_mod->get_faqs();
+    echo view('public/faqs_view', $data);
     echo view('template/footer');
   }
 

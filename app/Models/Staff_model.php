@@ -997,6 +997,7 @@ class Staff_model extends Model {
     $db->close;
     return $retarr;
   }
+
     public function get_fam_mems($id) {
       $db      = \Config\Database::connect();
       $builder = $db->table('tMembers');
@@ -1081,13 +1082,18 @@ class Staff_model extends Model {
       if($cnt > 0) {
         $builder->resetQuery();
         $res = $builder->get()->getResult();
+        $login_mod = new \App\Models\Login_model();
         foreach ($res as $key => $faq) {
           $elem = array();
           $elem['id'] = $faq->id_faqs;
           $elem['theq'] = $faq->theq;
           $elem['thea'] = $faq->thea;
           $elem['id_user_type'] = $faq->id_user_type;
-          array_push($retarr, $elem);
+          $elem['id_user'] = $faq->id_user;
+          $usr_arr = $login_mod->get_user_arr($elem['id_user']);
+          $elem['fname'] = $usr_arr['fname'];
+          $elem['lname'] = $usr_arr['lname'];
+          array_push($retarr['faqs'], $elem);
         }
       }
       else {
@@ -1096,6 +1102,31 @@ class Staff_model extends Model {
       $user_mod = new \App\Models\User_model();
       $retarr['mem_types'] = $user_mod->get_user_types();
       return $retarr;
+    }
+
+    public function edit_faq($param) {
+      $id = $param['id'];
+      unset($param['id']);
+      $db      = \Config\Database::connect();
+      $builder = $db->table('faqs');
+      $cnt = $builder->countAllResults();
+      $builder->resetQuery();
+      if($cnt > 0) {
+        $id != NULL ? $builder->update($param, ['id_faqs' => $id]) : $builder->insert($param);
+      }
+      else {
+        $builder->insert($param);
+      }
+
+      $db->close();
+    }
+
+    public function delete_faq($id) {
+      $db      = \Config\Database::connect();
+      $builder = $db->table('faqs');
+      $builder->where('id_faqs', $id);
+      $builder->resetQuery();
+      $builder->delete(['id_faqs' => $id]);
     }
 
     /**
@@ -1123,5 +1154,5 @@ class Staff_model extends Model {
       }
       $db->close();
       return $retarr;
-    }
+  }
 }
