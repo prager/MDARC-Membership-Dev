@@ -14,7 +14,7 @@
             <div>
                 <h1>MDARC <span class="text-warning">Membership Portal</span> </h1>
                 <p class="my-4">
-                  <span class="text-danger">This website is in its early stage of development</span>. It is intended for MDARC (<a href="http://mdarc.org" target="_blank" class="text-decoration-none">Mount Diablo Amateur Radio Club</a>) members to check on their membership status and later will provide payment gateway, among other additional features. More on <a href="<?php echo base_url() . '/index.php/faqs'; ?>" class="text-decoration-none">FAQ page</a>. In case anyone would like to participate in the portal testing, then, please, provide your MDARC registered email and submit below.
+                  This website is intended for MDARC (<a href="http://mdarc.org" target="_blank" class="text-decoration-none">Mount Diablo Amateur Radio Club</a>) members to check on their membership status and later will provide payment gateway, among other additional features. More on <a href="<?php echo base_url() . '/index.php/faqs'; ?>" class="text-decoration-none">FAQ page</a>. In case anyone would like to participate in the portal development, make sure you are a registered user and then let the webmaster know via the <a href="<?php echo base_url(). '/index.php/contact'?>" class="text-decoration-none">Contact Page</a>.
                 </p>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login"> User Login </button>
             </div>
@@ -28,7 +28,7 @@
     <div class="container">
       <form action="<?php echo base_url() . '/index.php/register' ?>" method="post">
         <div class="d-md-flex justify-content-between align-items-center">
-            <h3 class="mb-3 ms-3 mb-md-0">Sign up for portal testing</h3>
+            <h3 class="mb-3 ms-3 mb-md-0">Sign up for user access</h3>
             <div class="col-lg-6 offset-col-lg-3">
               <div class="input-group news-input">
                   <input type="text" class="form-control" name="email" id="email" placeholder="Enter Your MDARC Email">
