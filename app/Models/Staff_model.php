@@ -361,7 +361,7 @@ class Staff_model extends Model {
       $builder->where('id_members', $elem['id_parent']);
       $parent = $builder->get()->getRow();
       $elem['parent_fname'] = $parent->fname;
-      $elem['parent_lname'] = $parent->lname;
+      $elem['parent_lname'] = $parent->lname;        
     }
     else {
       $elem['id_parent'] = 0;
