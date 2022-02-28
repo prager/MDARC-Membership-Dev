@@ -532,6 +532,13 @@ class Member_model extends Model {
     $id = $param['id'];
     unset($param['id']);
 
+//get current year and pay date of the parent
+    $builder->resetQuery();
+    $builder->where('id_members', $mem->parent_primary);
+    $parent = $builder->get()->getRow();
+    $param['cur_year'] = $parent->cur_year;
+    $param['paym_date'] = $parent->paym_date;
+
     $builder->resetQuery();
     $builder->update($param, ['id_members' => $id]);
     $param['id'] = $id;
@@ -563,6 +570,7 @@ class Member_model extends Model {
     if(!$flag) {
       $id = $param['id'];
       unset($orig_mem['id']);
+      unset($orig_mem['cur_year']);
       unset($orig_mem['carrier']);
       unset($orig_mem['dir']);
       unset($orig_mem['arrl']);
