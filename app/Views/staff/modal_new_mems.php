@@ -22,7 +22,7 @@
         else {?>
           <div class="row">
             <div class="col">
-              <h4>New new members for the period</h4>
+              <h4>No new members for the period <?php echo $date_start . ' to ' . $date_stop; ?></h4>
             </div>
           </div>
       <?php }?>
