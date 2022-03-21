@@ -361,7 +361,7 @@ class Staff_model extends Model {
       $builder->where('id_members', $elem['id_parent']);
       $parent = $builder->get()->getRow();
       $elem['parent_fname'] = $parent->fname;
-      $elem['parent_lname'] = $parent->lname;        
+      $elem['parent_lname'] = $parent->lname;
     }
     else {
       $elem['id_parent'] = 0;
@@ -808,6 +808,9 @@ class Staff_model extends Model {
     $retarr['cnt_renew'] = count($this->get_renewals_year($param['date_stop']));
     $retarr['cnt_pay'] = count($this->get_pay_dues($param['date_stop']));
     $retarr['cnt_hons'] = count($this->get_hon_mems());
+    $new_mems_arr = $this->new_mems($param);
+    $retarr['new_mems'] = $new_mems_arr['new_mems'];
+    $retarr['renewals'] = $new_mems_arr['renewals'];
     return $retarr;
   }
 
@@ -1154,5 +1157,12 @@ class Staff_model extends Model {
       }
       $db->close();
       return $retarr;
+  }
+
+  private function new_mems($param) {
+    $retarr['new_mems'] = NULL;
+    $retarr['renewals'] = NULL;
+
+    return $retarr;
   }
 }

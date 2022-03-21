@@ -396,4 +396,18 @@ class Staff extends BaseController {
 		}
 		echo view('template/footer');
 	}
+
+	public function new_mems() {
+		if($this->check_staff()) {
+			echo view('template/header_staff');
+			echo view('template/new_mems_view', $this->staff_mod->new_mems());
+		}
+		else {
+			echo view('template/header');
+			$data['title'] = 'Authorization Error';
+			$data['msg'] = 'You may not be authorized to view this page. Go back and try again ' . anchor(base_url(), 'here'). '<br><br>';
+			echo view('status/status_view', $data);
+		}
+		echo view('template/footer');
+	}
 }

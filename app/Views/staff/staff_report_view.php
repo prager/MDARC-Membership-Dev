@@ -12,6 +12,10 @@
           <table id="staff_rep" class="table table-hover">
             <thead>
               <tr>
+                <th>Report from: <?php echo $date_start . ' to ' . $date_stop; ?></th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr>
                 <th scope="col">Report Parameters<a href="#" data-bs-toggle="modal" data-bs-target="#setDates"> (Set Dates)</a></th>
                 <?php include 'mod_dates_period.php'; ?>
                 <th scope="col">Parameter Values</th>
@@ -29,6 +33,19 @@
               <tr>
                 <td>New Members For The Year</td>
                 <td><?php echo $new_mems_period; ?></td>
+              </tr>
+              <tr>
+                <td>New Members For The Period</td>
+                <td><a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#newMems">
+                <?php
+                if($new_mems != NULL) {
+                  echo count($new_mems);
+                }
+                else {
+                  echo '0';
+                } ?></a>
+                </td>
+                <?php include 'modal_new_mems.php'; ?>
               </tr>
               <!--<tr>
                 <td>Renewals This Year</td>
