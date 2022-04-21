@@ -2,21 +2,21 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addFamMemLabel">Add Family Members</h5>
+        <h5 class="modal-title" id="addFamMemLabel">Add a Family Member</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="<?php echo base_url() . '/index.php/add-fam/'. $mem['id']; ?>" method="post">
       <div class="modal-body">
       <section class="px-2">
-        <div class="row pt-2">
+        <div class="row">
           <div class="col-lg-3 p-3">
-            <div class="form-check">
+            <div class="form-check pt-3">
               <label class="form-check-label" for="arrl"> ARRL Member </label>
               <input class="form-check-input" type="checkbox" name="arrl" />
             </div>
           </div>
           <div class="col-lg-4 p-3">
-            <div class="form-check">
+            <div class="form-check pt-3">
               <label class="form-check-label" for="arrl"> List in Directory OK </label>
               <input class="form-check-input" type="checkbox" name="ok_mem_dir" />
             </div>

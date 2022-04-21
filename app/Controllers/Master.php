@@ -245,6 +245,22 @@ class Master extends BaseController {
 		      echo view('status/status_view.php', $data);
 				}
 			}
+			public function add_spouse() {
+				if($this->check_master()) {
+					$this->uri->setSilent();
+					$param['id_members'] = $this->uri->getSegment(2);
+					$param['parent'] =  trim($this->request->getPost('parent'));
+					$this->mem_mod->add_spouse($param);
+					$this->show_members();
+				}
+				else {
+					echo view('template/header');
+					$this->login_mod->logout();
+		      $data['title'] = 'Login Error';
+		      $data['msg'] = 'There was an error while checking your credentials.<br><br>';
+		      echo view('status/status_view.php', $data);
+				}
+			}
 				public function edit_fam_mem() {
 					if($this->check_master()) {
 						$this->uri->setSilent();

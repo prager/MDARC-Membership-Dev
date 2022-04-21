@@ -50,6 +50,7 @@ $routes->add('pers-data', 'Member::pers_data');
 $routes->add('add-mem', 'Master::add_mem');
 $routes->add('add-fam-mem/(:num)', 'Member::add_fam_mem');
 $routes->add('add-fam/(:num)', 'Master::add_fam_mem');
+$routes->add('add-spouse/(:num)', 'Master::add_spouse');
 $routes->add('staff-report', 'Staff::staff_report');
 $routes->add('staff-report/(:alphanum)', 'Staff::staff_report');
 $routes->add('edit-mem', 'Master::edit_mem');

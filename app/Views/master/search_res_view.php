@@ -34,6 +34,10 @@
                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#addFMems<?php echo $mem['id']; ?>"><?php echo $mem['mem_type']; ?></a></td>
                        <?php include 'modal_add_fams.php'; ?>
                <?php }
+                     elseif(($mem['id_mem_types'] == 3) || ($mem['id_mem_types'] == 4)) {?>
+                       <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#addSpouse<?php echo $mem['id']; ?>"><?php echo $mem['mem_type']; ?></a></td>
+                       <?php include 'mod_add_spouse.php'; ?>
+               <?php }
                      else {?>
                        <?php echo $mem['mem_type']; ?></td>
                <?php } ?>

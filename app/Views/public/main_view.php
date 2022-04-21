@@ -1,5 +1,3 @@
-
-
 <!-- Showcase -->
 <section class="bg-light text-dark p-4 text-center text-sm-start">
     <div class="container">
@@ -85,7 +83,7 @@
             					}
             					</script>
             					<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeOLEmQMnt6O2kEXJ7llYr1xw2y-BEm6M&callback=myMap"></script>
-                      </div<!-- SB Forms JS from https://startbootstrap.com/guides/bootstrap-form-setup-guide-->
+              </div<!-- SB Forms JS from https://startbootstrap.com/guides/bootstrap-form-setup-guide-->
           <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
           </div>
     </div>

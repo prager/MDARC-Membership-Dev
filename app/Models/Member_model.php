@@ -331,6 +331,29 @@ class Member_model extends Model {
     return $elem;
   }
 
+  public function add_spouse($param) {
+    $db      = \Config\Database::connect();
+    $builder = $db->table('tMembers');
+    $builder->resetQuery();
+
+// update parent from individual to primary
+    $mem_array = array('id_mem_types' => 2, 'mem_type' => 'Primary');
+    $builder->update($mem_array, ['id_members' => $param['parent']]);
+
+// get the pay_date and cur_year from the parent
+    $builder->resetQuery();
+    $builder->where('id_members', $param['parent']);
+    $mem_obj = $builder->get()->getRow();
+    $param['pay_date'] = $mem_obj->paym_date;
+    $param['cur_year'] = $mem_obj->cur_year;
+
+// update spouse for parent ID, cur_year and pay_date
+    $mem_array = array('parent_primary' => $param['parent'], 'paym_date' => $param['pay_date'], 'cur_year' => $param['cur_year']);
+    $builder->update($mem_array, ['id_members' => $param['id_members']]);
+
+    $db->close();
+  }
+
   public function add_fam_mem($param) {
     $retval = NULL;
 
@@ -362,6 +385,8 @@ class Member_model extends Model {
       $db      = \Config\Database::connect();
       $builder = $db->table('tMembers');
       $builder->resetQuery();
+
+  // update parent from individual to primary
       $mem_array = array('id_mem_types' => 2, 'mem_type' => 'Primary');
       $builder->update($mem_array, ['id_members' => $param['parent_primary']]);
       $builder->resetQuery();
@@ -378,6 +403,7 @@ class Member_model extends Model {
       $builder->resetQuery();
       $builder->insert($param);
       $db->close();
+
     }
 
     return $retval;
