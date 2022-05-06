@@ -26,6 +26,7 @@ $routes->setAutoRoute(true);
 $routes->add('home', 'Home::index');
 $routes->add('Home', 'Home::index');
 $routes->add('faqs', 'Home::faqs');
+$routes->add('disp-logins', 'Master::display_logins');
 $routes->add('new-mems/(:num)', 'Staff::new_mems');
 $routes->add('new-mems/', 'Staff::new_mems');
 $routes->add('master-test', 'Master::master_test');

@@ -595,6 +595,24 @@ class Master extends BaseController {
 		echo view('template/footer');
 	}
 
+	public function disp_logins() {
+		if($this->check_master()) {
+			echo view('template/header_master');
+			$param['id'] = $this->uri->getSegment(2);
+			$param['page'] = $this->uri->getSegment(3);
+			$data['logins'] = $this->master_mod->get_logins($param);
+			echo view('master/logins_view', $data);
+		}
+		else {
+			echo view('template/header');
+			$data['title'] = 'Login Error';
+			$data['msg'] = 'There was an error while checking your credentials. Click ' . anchor('Home/reset_password', 'here') .
+			' to reset your password or go to home page ' . anchor('Home', 'here'). '<br><br>';
+			echo view('status/status_view', $data);
+		}
+		echo view('template/footer');
+	}
+
 	public function master_test() {
 		echo view('template/header_master');
 		$param['msg'] = $this->request->getPost('thequestion');
